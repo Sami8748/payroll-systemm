@@ -1,0 +1,7 @@
+Month,Year,"Employee Code","Employee Name","Base Salary","Social Security Deduction"
+4,2026,EMP001,"Somchai N.",16000.00,800.00
+4,2026,EMP003,Sirichai,16000.00,800.00
+4,2026,EMP004,Thanapoom,16000.00,800.00
+4,2026,EMP005,Sara,19250.00,875.00
+
+TOTAL,,,,67250.00,3275.00

@@ -1,0 +1,9 @@
+{
+  "name": "internal/payroll-system",
+  "description": "Internal payroll system with encrypted payslip workflow",
+  "type": "project",
+  "require": {
+    "phpmailer/phpmailer": "^6.9",
+    "tecnickcom/tcpdf": "^6.7"
+  }
+}

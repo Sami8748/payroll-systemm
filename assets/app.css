@@ -1,0 +1,717 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&family=Outfit:wght@400;500;600;700&display=swap');
+
+
+/* โหลดฟอนต์ Kanit → ใช้กับภาษาไทย
+โหลดฟอนต์ Outfit → ใช้กับหัวข้อ / Branding */
+
+:root {
+    /*สีหลักของระบบ*/
+    --brand-900: #0b2f6b; /*สีหลักเข้มสุดสำหรับธีมสว่าง*/
+    --brand-700: #1d4fa3; /*สีหลักเข้มสำหรับธีมสว่าง*/
+    --brand-500: #2e6ee9; /*สีหลักปานกลางสำหรับธีมสว่าง*/
+    --brand-300: #7fbcff; /*สีหลักอ่อนสำหรับธีมสว่าง*/
+    /*สีพื้นหลังและพื้นผิวต่างๆ*/
+    --ice-100: #edf6ff;
+    /*สี card / surface ต่างๆ*/
+    --surface: rgba(255, 255, 255, 0.88);
+    --surface-strong: #ffffff;
+    /*สีข้อความ*/
+    --text-900: #0f16a4;
+    --text-600: #506784;
+    /*สีเส้นขอบและเส้นแบ่งต่างๆ*/
+    --line: rgba(22, 83, 180, 0.396);
+    /*เงาแบบนุ่มๆ สำหรับ card และองค์ประกอบต่างๆ*/
+    --shadow-soft: 0 20px 40px rgba(19, 74, 166, 0.14);
+}
+
+/*เปิดธีมมืดเมื่อ html มี data-theme="dark"*/
+html[data-theme='dark'] {
+    /*เปลี่ยนสีสำหรับธีมมืด*/
+    --surface: rgba(14, 25, 44, 0.88);
+    --surface-strong: #0f1d34;
+    /*ตัวหนังสื่อสำหรับธีมมืดจะสว่างขึ้นเพื่อความคมชัด*/
+    --text-900: #e6f0ff;
+    --text-600: #a8bbd9;
+    --text-500: #bed0ea;
+    /*สีเส้นขอบและเส้นแบ่งสำหรับธีมมืดจะเป็นโทนสว่างที่มีความโปร่งแสงมากขึ้น*/
+    --line: rgba(97, 151, 232, 0.547);
+    --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.34);
+    color-scheme: dark;
+}
+
+* {
+    box-sizing: border-box; /*ทำให้ padding + border ไม่ทำให้ขนาด element เพี้ยน*/
+}
+
+/*รีเซ็ต margin และกำหนดฟอนต์หลักของระบบ*/
+body {
+    margin: 0;
+    font-family: 'Kanit', 'Segoe UI', sans-serif;
+    color: var(--text-900);
+    /*ทำ Background Gradient + Glow Effect แบบนุ่มๆ*/
+    background:
+        radial-gradient(circle at 10% 12%, rgba(126, 190, 255, 0.45) 0%, rgba(126, 190, 255, 0) 40%),
+        radial-gradient(circle at 88% 5%, rgba(46, 110, 233, 0.26) 0%, rgba(46, 110, 233, 0) 38%),
+        linear-gradient(165deg, #f8fcff 0%, #eaf4ff 58%, #deeeff 100%);
+    min-height: 100vh;
+}
+
+html[data-theme='dark'] body {
+    background:
+        radial-gradient(circle at 12% 16%, rgba(66, 130, 228, 0.22) 0%, rgba(66, 130, 228, 0) 42%),
+        radial-gradient(circle at 86% 8%, rgba(37, 103, 208, 0.16) 0%, rgba(37, 103, 208, 0) 42%),
+        linear-gradient(160deg, #081426 0%, #0a1730 58%, #0d2246 100%);
+}
+
+/*เพิ่มแอนิเมชันให้กับหน้าเพจเมื่อโหลด*/
+.page-shell {
+    animation: page-rise 380ms ease-out both;
+}
+/*แอนิเมชันสำหรับให้หน้าเพจค่อยๆ ปรากฏขึ้นพร้อมกับเลื่อนขึ้นเล็กน้อย*/
+@keyframes page-rise {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/*สไตล์สำหรับแถบเมนูด้านบน*/
+.top-nav {
+    background: rgba(255, 255, 255, 0.92);
+    border-bottom: 1px solid rgba(7, 45, 117, 0.762); /*เส้นแบ่งด้านล่างแถบเมนู*/
+    box-shadow: 0 10px 24px rgba(10, 40, 90, 0.08); /*เงาแบบนุ่มๆ สำหรับแถบเมนู*/
+}
+/*สไตล์สำหรับโลโก้หรือชื่อแบรนด์ในแถบเมนูด้านบน*/
+.top-nav .navbar-brand {
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 0.4px; /*เพิ่มความห่างระหว่างตัวอักษรเล็กน้อยเพื่อความสวยงาม*/
+    font-weight: 600;
+    color: #0839a2; /*สีของโลโก้หรือชื่อแบรนด์ในแถบเมนู*/
+}
+
+/*สไตล์สำหรับลิงก์เมนูและปุ่มต่างๆ ในแถบเมนูด้านบน*/
+.top-nav .menu-link, /*ลิงก์เมนูหลัก*/
+.top-nav .lang-switch, /*สวิตช์เปลี่ยนภาษา*/
+.top-nav .theme-toggle /*สวิตช์เปลี่ยนธีม*/  {
+    border: 1px solid rgba(30, 74, 150, 0.22); /*เส้นขอบบางๆ รอบๆ ลิงก์และปุ่มในแถบเมนู*/
+    border-radius: 999px; /*ทำให้ปุ่มและลิงก์ในแถบเมนูมีขอบโค้งแบบเต็มที่*/
+    color: #2f5ea8;
+    background: rgba(66, 126, 215, 0.08); /*พื้นหลังแบบโปร่งแสงสำหรับลิงก์และปุ่มในแถบเมนู*/
+    transition: all 200ms ease; /*เพิ่มการเปลี่ยนแปลงแบบนุ่มนวลเมื่อโฮเวอร์หรือคลิกที่ลิงก์และปุ่มในแถบเมนู*/
+}
+/*เอฟเฟกต์เมื่อโฮเวอร์หรือคลิกที่ลิงก์และปุ่มในแถบเมนูด้านบน*/
+.top-nav .menu-link:hover, /*โฮเวอร์ที่ลิงก์เมนูหลัก*/
+.top-nav .lang-switch:hover, /*โฮเวอร์ที่สวิตช์เปลี่ยนภาษา*/
+.top-nav .lang-switch.active, /*สวิตช์เปลี่ยนภาษาที่ถูกเลือก*/
+.top-nav .theme-toggle:hover, /*โฮเวอร์ที่สวิตช์เปลี่ยนธีม*/
+.top-nav .theme-toggle.active { /*สวิตช์เปลี่ยนธีมที่ถูกเลือก*/
+    background: rgba(66, 126, 215, 0.14);
+    color: #1f4b96;
+    transform: translateY(-1px); /*เพิ่มเอฟเฟกต์ยกขึ้นเล็กน้อยเมื่อโฮเวอร์หรือคลิกที่ลิงก์และปุ่มในแถบเมนู*/
+}
+
+/*สไตล์พิเศษสำหรับลิงก์เมนูที่เป็นหน้าปัจจุบัน (active page) ในแถบเมนูด้านบน*/
+.top-nav .menu-link.active-page /*ขีดเส้นใต้ลิงก์เมนูที่เป็นหน้าปัจจุบัน*/ {
+    background: rgba(66, 126, 215, 0.14); /*พื้นหลังแบบโปร่งแสงสำหรับลิงก์เมนูที่เป็นหน้าปัจจุบันในแถบเมนู*/
+    color: #1f4b96;
+    border-color: rgba(30, 74, 150, 0.28); /*เส้นขอบที่เข้มขึ้นสำหรับลิงก์เมนูที่เป็นหน้าปัจจุบันในแถบเมนู*/
+}
+
+.top-nav .logout-link { /*สไตล์สำหรับลิงก์ออกจากระบบในแถบเมนูด้านบน*/
+    border-radius: 999px; /*ทำให้ลิงก์ออกจากระบบมีขอบโค้งแบบเต็มที่*/
+    box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.15); /*เพิ่มเงาแบบนุ่มๆ ให้กับลิงก์ออกจากระบบเพื่อความโดดเด่น*/
+}
+
+/*สไตล์สำหรับแถวที่ใช้จัดวางองค์ประกอบต่างๆ ในแถบเมนูด้านบนให้เรียงตัวกันอย่างสวยงามและมีระยะห่างที่เหมาะสม*/
+.top-menu-row {
+    display: flex; /*ใช้ Flexbox เพื่อจัดวางองค์ประกอบต่างๆ ในแถวเดียวกัน*/
+    flex-wrap: wrap; /*อนุญาตให้องค์ประกอบในแถวนี้สามารถขึ้นบรรทัดใหม่ได้เมื่อหน้าจอมีขนาดเล็กลง*/
+    align-items: center; /*จัดแนวองค์ประกอบต่างๆ ในแถวนี้ให้อยู่ตรงกลางในแนวตั้ง*/
+    gap: 0.6rem 1.35rem; /*เพิ่มระยะห่างระหว่างองค์ประกอบต่างๆ ในแถวนี้ โดยมีระยะห่างแนวตั้ง 0.6rem และระยะห่างแนวนอน 1.35rem*/
+}
+
+/*สไตล์สำหรับชิปผู้ใช้ที่แสดงในแถบเมนูด้านบนเมื่อผู้ใช้เข้าสู่ระบบแล้ว*/
+.top-user-chip /*สไตล์สำหรับชิปผู้ใช้ที่แสดงในแถบเมนูด้านบนเมื่อผู้ใช้เข้าสู่ระบบแล้ว*/ {
+    display: inline-flex; /*ใช้ Flexbox เพื่อจัดวางเนื้อหาภายในชิปผู้ใช้ให้อยู่ในแนวเดียวกันและมีระยะห่างที่เหมาะสม*/
+    align-items: center; /*จัดแนวเนื้อหาภายในชิปผู้ใช้ให้อยู่ตรงกลางในแนวตั้ง*/
+    gap: 0.4rem; /*เพิ่มระยะห่างระหว่างเนื้อหาภายในชิปผู้ใช้ เช่น รูปโปรไฟล์และชื่อผู้ใช้*/
+    font-size: 0.92rem; /*กำหนดขนาดตัวอักษรสำหรับชิปผู้ใช้ให้เหมาะสมกับการแสดงในแถบเมนูด้านบน*/
+    padding: 0.3rem 0.72rem; /*เพิ่มระยะห่างภายในชิปผู้ใช้เพื่อให้ดูมีพื้นที่และไม่แน่นเกินไป*/
+    border-radius: 999px; /*ทำให้ชิปผู้ใช้มีขอบโค้งแบบเต็มที่*/
+    border: 1px solid rgba(42, 86, 160, 0.24); /*เส้นขอบบางๆ รอบๆ ชิปผู้ใช้*/
+    background: rgba(66, 126, 215, 0.08); /*พื้นหลังแบบโปร่งแสงสำหรับชิปผู้ใช้*/
+    color: #274f92 !important; /*สีตัวอักษรสำหรับชิปผู้ใช้*/
+}
+
+/*สไตล์สำหรับชิปผู้ใช้ในแถบเมนูด้านบนเมื่ออยู่ในธีมมืด*/
+html[data-theme='dark'] .top-user-chip {
+    color: #eaf3ff !important; /*สีตัวอักษรสำหรับชิปผู้ใช้ในธีมมืด*/
+    background: rgba(188, 214, 255, 0.13); /*พื้นหลังแบบโปร่งแสงสำหรับชิปผู้ใช้ในธีมมืด*/
+    border-color: rgba(188, 214, 255, 0.32); /*เส้นขอบสำหรับชิปผู้ใช้ในธีมมืด*/
+}
+
+/*สไตล์สำหรับสวิตช์เปลี่ยนภาษาและสวิตช์เปลี่ยนธีมในแถบเมนูด้านบนเพื่อให้มีขนาดที่เหมาะสมและจัดวางอย่างสวยงาม*/
+.top-nav .theme-toggle {
+    min-width: 42px; /*กำหนดความกว้างขั้นต่ำสำหรับสวิตช์เปลี่ยนธีมเพื่อให้มีขนาดที่เหมาะสมและไม่เล็กเกินไป*/
+    display: inline-flex; /*ใช้ Flexbox เพื่อจัดวางเนื้อหาภายในสวิตช์ให้อยู่ในแนวเดียวกันและมีระยะห่างที่เหมาะสม*/
+    align-items: center; /*จัดแนวเนื้อหาภายในสวิตช์ให้อยู่ตรงกลางในแนวตั้ง*/
+    justify-content: center; /*จัดแนวเนื้อหาภายในสวิตช์ให้อยู่ตรงกลางในแนวนอน*/
+}
+
+/*สไตล์สำหรับปุ่มเมนูที่ใช้สำหรับเปิดเมนูในแถบเมนูด้านบนเมื่อหน้าจอมีขนาดเล็กลง (เช่น บนมือถือ)*/
+.top-nav .navbar-toggler {
+    border-color: rgba(20, 62, 129, 0.26); /*เส้นขอบสำหรับปุ่มเมนูในแถบเมนูด้านบนเมื่อหน้าจอมีขนาดเล็กลง*/
+}
+
+/*สไตล์สำหรับไอคอนของปุ่มเมนูในแถบเมนูด้านบนเมื่อหน้าจอมีขนาดเล็กลง*/
+.top-nav .navbar-toggler:focus {
+    box-shadow: 0 0 0 0.15rem rgba(77, 136, 230, 0.28);/*เพิ่มเงาแบบนุ่มๆ ให้กับปุ่มเมนูในแถบเมนูด้านบนเมื่อได้รับโฟกัสเพื่อความโดดเด่น*/
+}
+
+/*สไตล์สำหรับปุ่มเมนูและไอคอนของปุ่มเมนูในแถบเมนูด้านบนเมื่ออยู่ในธีมมืด*/
+html[data-theme='dark'] .top-nav .navbar-toggler {
+    border-color: rgba(186, 213, 255, 0.32); 
+}
+
+/*สไตล์สำหรับไอคอนของปุ่มเมนูในแถบเมนูด้านบนเมื่อหน้าจอมีขนาดเล็กลงและอยู่ในธีมมืด*/
+html[data-theme='dark'] .top-nav .navbar-toggler-icon {
+    filter: invert(1) brightness(1.25); /*ปรับสีของไอคอนปุ่มเมนูในแถบเมนูด้านบนเมื่ออยู่ในธีมมืดให้สว่างขึ้นและมีความคมชัดมากขึ้น*/
+}
+
+/*สไตล์สำหรับลิงก์เมนูในแถบเมนูด้านบนเพื่อให้มีขนาดที่เหมาะสมและจัดวางอย่างสวยงาม*/
+.top-nav .menu-link {
+    border: 0; /*เอาเส้นขอบออกจากลิงก์เมนูในแถบเมนูด้านบนเพื่อให้ดูสะอาดตาและทันสมัยมากขึ้น*/
+    border-radius: 0; /*กำหนดขอบโค้งของลิงก์เมนูในแถบเมนูด้านบนให้เป็นศูนย์เพื่อให้ดูเรียบง่าย*/
+    background: transparent; /*ตั้งค่าพื้นหลังของลิงก์เมนูในแถบเมนูด้านบนให้โปร่งใส*/
+    color: #2d498a; /*กำหนดสีตัวอักษรของลิงก์เมนูในแถบเมนูด้านบน*/
+    font-size: 1.04rem; /*กำหนดขนาดตัวอักษรของลิงก์เมนูในแถบเมนูด้านบน*/
+    font-weight: 600; 
+    padding: 0.52rem 0.08rem;
+    position: relative; /*ตั้งค่าตำแหน่งของลิงก์เมนูในแถบเมนูด้านบนเป็น relative เพื่อให้สามารถใช้ pseudo-element ::after ในการสร้างเส้นขีดใต้สำหรับลิงก์เมนูที่เป็นหน้าปัจจุบันได้อย่างถูกต้อง*/
+}
+
+/*เอฟเฟกต์เมื่อโฮเวอร์ที่ลิงก์เมนูในแถบเมนูด้านบนเพื่อให้มีการเปลี่ยนแปลงแบบนุ่มนวลและดูมีชีวิตชีวามากขึ้น*/
+.top-nav .menu-link:hover {
+    background: transparent;
+    color: #3568de;
+    transform: none; /*เอฟเฟกต์ยกขึ้นเล็กน้อยจะถูกปิดเมื่อโฮเวอร์ที่ลิงก์เมนูในแถบเมนูด้านบนเพื่อให้ดูมีความสอดคล้องกับการเปลี่ยนแปลงสีและไม่ทำให้ดูวุ่นวายเกินไป*/
+}
+
+/*สไตล์พิเศษสำหรับลิงก์เมนูที่เป็นหน้าปัจจุบัน (active page) ในแถบเมนูด้านบนเพื่อให้ดูโดดเด่นและชัดเจนมากขึ้น*/
+.top-nav .menu-link.active-page {
+    background: transparent; 
+    color: #3568de; 
+    border-color: transparent; 
+}
+
+/*สไตล์สำหรับเส้นขีดใต้ของลิงก์เมนูที่เป็นหน้าปัจจุบัน (active page) ในแถบเมนูด้านบนเพื่อให้ดูโดดเด่นและชัดเจนมากขึ้น*/
+.top-nav .menu-link.active-page::after /*"ช่วยเอา 'เส้นขีดสีๆ' ไปแปะไว้ข้างล่างเมนูที่น้องฮันกำลังเปิดอยู่ตอนนี้หน่อยนะ โดยให้เส้นนี้ลอยอยู่ข้างล่างแบบอิสระ ไม่ต้องไปเบียดตัวหนังสือ"*/ {
+    content: ''; /*สร้าง pseudo-element ::after เพื่อใช้เป็นเส้นขีดใต้สำหรับลิงก์เมนูที่เป็นหน้าปัจจุบันในแถบเมนูด้านบน*/
+    position: absolute; /*ตั้งค่าตำแหน่งของ pseudo-element ::after เป็น absolute เพื่อให้สามารถวางเส้นขีดใต้ได้อย่างถูกต้องใต้ลิงก์เมนูที่เป็นหน้าปัจจุบันในแถบเมนูด้านบน*/
+    left: 0; /*กำหนดตำแหน่งของเส้นขีดใต้ให้เริ่มต้นที่ด้านซ้ายของลิงก์เมนูที่เป็นหน้าปัจจุบันในแถบเมนูด้านบน*/
+    bottom: 0.30rem; /*ให้เส้นไปอยู่ล่างใต้เมนู*/
+    width: 100%; /*เส้นยาวเท่าตัวอักษรของลิงก์เมนูที่เป็นหน้าปัจจุบันในแถบเมนูด้านบน*/
+    height: 4px; /*เส้นหนาประมาณ 4px เพื่อให้ดูโดดเด่นและชัดเจนมากขึ้น*/
+    border-radius: 3px; /*ทำให้เส้นขีดใต้มีขอบโค้งเล็กน้อยเพื่อให้ดูนุ่มนวลและสวยงามมากขึ้น*/
+    background: #070707; /*กำหนดสีของเส้นขีดใต้สำหรับลิงก์เมนูที่เป็นหน้าปัจจุบันในแถบเมนูด้านบน*/
+}
+
+/*สไตล์สำหรับไอคอนในลิงก์เมนูของแถบเมนูด้านบนเพื่อให้ดูสะอาดตาและไม่รกเกินไป*/
+.top-nav .menu-link i {
+    display: none;
+}
+
+/*สไตล์สำหรับแถบเมนูด้านบนเมื่ออยู่ในธีมมืดเพื่อให้ดูเข้ากับธีมมืดและมีความคมชัดมากขึ้น*/
+html[data-theme='dark'] .top-nav {
+    background: rgba(12, 24, 45, 0.96);
+    border-bottom-color: rgba(173, 202, 245, 0.18); /*เส้นแบ่งด้านล่างแถบเมนูในธีมมืดจะเป็นโทนสว่างที่มีความโปร่งแสงมากขึ้นเพื่อให้ดูเข้ากับธีมมืดและมีความคมชัดมากขึ้น*/
+    box-shadow: 0 12px 28px rgba(2, 8, 18, 0.42);
+}
+
+/*สไตล์สำหรับโลโก้หรือชื่อแบรนด์ในแถบเมนูด้านบนเมื่ออยู่ในธีมมืดเพื่อให้ดูเข้ากับธีมมืดและมีความคมชัดมากขึ้น*/
+html[data-theme='dark'] .top-nav .navbar-brand {
+    color: #d7e7ff;
+}
+
+/*สไตล์สำหรับลิงก์เมนูและปุ่มต่างๆ ในแถบเมนูด้านบนเมื่ออยู่ในธีมมืดเพื่อให้ดูเข้ากับธีมมืดและมีความคมชัดมากขึ้น*/
+html[data-theme='dark'] .top-nav .menu-link {
+    color: #d6e6ff;
+}
+
+/*เอฟเฟกต์เมื่อโฮเวอร์หรือคลิกที่ลิงก์และปุ่มในแถบเมนูด้านบนเมื่ออยู่ในธีมมืดเพื่อให้ดูเข้ากับธีมมืดและมีความคมชัดมากขึ้น*/
+html[data-theme='dark'] .top-nav .menu-link:hover,
+html[data-theme='dark'] .top-nav .menu-link.active-page {
+    color: #8fb8ff;
+}
+
+/*สไตล์พิเศษสำหรับลิงก์เมนูที่เป็นหน้าปัจจุบัน (active page) ในแถบเมนูด้านบนเมื่ออยู่ในธีมมืดเพื่อให้ดูโดดเด่นและชัดเจนมากขึ้น*/
+html[data-theme='dark'] .top-nav .menu-link.active-page::after {
+    background: #dbe9ff;
+}
+
+/*สไตล์สำหรับการ์ดและองค์ประกอบพื้นผิวต่างๆ ในระบบเพื่อให้ดูมีความนุ่มนวลและมีมิติที่สวยงามมากขึ้น*/
+.card {
+    border: 1px solid var(--line);/*เส้นขอบบางๆ*/
+    border-radius: 18px; /*ขอบโค้งแบบนุ่มๆ*/
+    background: var(--surface); 
+    backdrop-filter: blur(10px); /*เอฟเฟกต์เบลอพื้นหลัง*/
+    box-shadow: var(--shadow-soft); 
+}
+
+/*สไตล์สำหรับตารางและฟอร์มต่างๆ ในระบบเพื่อให้ดูเข้ากับธีมและมีความคมชัดมากขึ้น*/
+html[data-theme='dark'] .table, /*สไตล์ตารางธีมมืด*/
+html[data-theme='dark'] .form-control, /*สไตล์ฟอร์มคอนโทรลธีมมืด*/
+html[data-theme='dark'] .form-select { /*สไตล์ฟอร์มเลือกธีมมืด*/
+    color: var(--text-900); /*สีตัวอักษร*/
+    background-color: rgba(13, 32, 60, 0.65); /*พื้นหลัง*/
+}
+
+/*สไตล์สำหรับตารางในธีมมืดเพื่อให้ดูเข้ากับธีมและมีความคมชัดมากขึ้น*/
+html[data-theme='dark'] .table {
+    --bs-table-bg: transparent; /*พื้นหลังตาราง*/
+    --bs-table-color: var(--text-900); /*สีตัวอักษรในตาราง*/
+    --bs-table-striped-color: var(--text-900); /*สีตัวอักษรที่สลับแถว*/
+    --bs-table-striped-bg: rgba(255, 255, 255, 0.03); /*พื้นหลังที่สลับแถว*/
+    --bs-table-active-color: #f1f7ff; /*สีตัวอักษรที่ถุกเลือก*/
+    --bs-table-active-bg: rgba(140, 179, 233, 0.14); /*พื้นหลังที่ถูกเลือก*/
+    --bs-table-hover-color: #f1f7ff; /*สีตัวอักษรที่ถูกคลิก*/
+    --bs-table-hover-bg: rgba(140, 179, 233, 0.1); /*พื้นหลังที่๔ุกคลิก*/
+}
+
+/*สไตล์สำหรับหัวข้อของตารางในธีมมืด*/
+html[data-theme='dark'] .table thead th {
+    color: #c7dcfb;
+    font-weight: 600; /*ความหนาของตัวอักษรในหัวข้อตาราง*/
+}
+
+/*สไตล์สำหรับเส้นขอบของตารางในธีมมืด*/
+html[data-theme='dark'] .table td, 
+html[data-theme='dark'] .table th /*เส้นขอบของเซลล์ในตาราง*/ {
+    border-color: rgba(140, 179, 233, 0.22);
+}
+
+/*สไตล์สำหรับข้อความในธีมมืดเพื่อให้ดูเข้ากับธีมและมีความคมชัดมากขึ้น*/
+html[data-theme='dark'] .text-muted {
+    color: var(--text-500) !important; /*สีตัวอักษรจางลง*/
+}
+
+/*สไตล์สำหรับข้อความที่มีคลาส text-white-50 */
+html[data-theme='dark'] .text-white-50 {
+    color: #d8e8ff !important;
+}
+
+/*สไตล์สำหรับข้อความที่มีคลาส text-dark, text-body, text-secondary, text-black-50 ในธีมมืดเพื่อให้ดูเข้ากับธีมและมีความคมชัดมากขึ้น*/
+html[data-theme='dark'] .text-dark, /*สีตัวอักษรเข้มสำหรับธีมมืด*/
+html[data-theme='dark'] .text-body, /*สีตัวอักษรหลักสำหรับธีมมืด*/
+html[data-theme='dark'] .text-secondary, /*สีตัวอักษรรองสำหรับธีมมืด*/
+html[data-theme='dark'] .text-black-50 { /*สีตัวอักษรดำครึ่งความเข้มสำหรับธีมมืด*/
+    color: #e4efff !important;
+}
+
+/*สไตล์สำหรับข้อความทั่วไปในธีมมืดเพื่อให้ดูเข้ากับธีมและมีความคมชัดมากขึ้น*/
+html[data-theme='dark'] h1,
+html[data-theme='dark'] h2,
+html[data-theme='dark'] h3,
+html[data-theme='dark'] h4,
+html[data-theme='dark'] h5,
+html[data-theme='dark'] h6,
+html[data-theme='dark'] .h1,
+html[data-theme='dark'] .h2,
+html[data-theme='dark'] .h3,
+html[data-theme='dark'] .h4,
+html[data-theme='dark'] .h5,
+html[data-theme='dark'] .h6,
+html[data-theme='dark'] label,
+html[data-theme='dark'] p,
+html[data-theme='dark'] li,
+html[data-theme='dark'] strong,
+html[data-theme='dark'] small,
+html[data-theme='dark'] .form-label,
+html[data-theme='dark'] .card-title,
+html[data-theme='dark'] .card-text {
+    color: #e4efff; /*สีตัวอักษรในการ์ด*/
+}
+
+/*สไตล์สำหรับแถบเมนูด้านบนและองค์ประกอบต่างๆ ในแถบเมนูเมื่ออยู่ในธีมมืดเพื่อให้ดูเข้ากับธีมและมีความคมชัดมากขึ้น*/
+html[data-theme='dark'] .navbar,
+html[data-theme='dark'] .navbar * {
+    text-shadow: none;
+}
+
+html[data-theme='dark'] a { /*สไตล์สำหรับลิงก์ในธีมมืด*/
+    color: #9bc7ff;
+}
+
+html[data-theme='dark'] a:hover { /*สไตล์สำหรับลิงก์เมื่อโฮเวอร์ในธีมมืด*/
+    color: #bfdbff;
+}
+
+/*สไตล์สำหรับ placeholder ในฟอร์มคอนโทรลในธีมมืดเพื่อให้ดูเข้ากับธีมและมีความคมชัดมากขึ้น*/
+html[data-theme='dark'] .form-control::placeholder {
+    color: #a7bddf;
+}
+
+/*สไตล์สำหรับเส้นขอบของฟอร์มคอนโทรลและฟอร์มเลือกในธีมมืดเพื่อให้ดูเข้ากับธีมและมีความคมชัดมากขึ้น*/
+html[data-theme='dark'] .form-control,
+html[data-theme='dark'] .form-select {
+    border-color: rgba(152, 188, 240, 0.32);
+}
+
+/*สไตล์สำหรับฟอร์มคอนโทรลและฟอร์มเลือกเมื่อได้รับโฟกัสในธีมมืดเพื่อให้ดูเข้ากับธีมและมีความคมชัดมากขึ้น*/
+html[data-theme='dark'] .form-control:focus,
+html[data-theme='dark'] .form-select:focus {
+    color: #f0f7ff;
+    background-color: rgba(18, 40, 74, 0.85);
+    border-color: #86b6ff;
+    box-shadow: 0 0 0 0.2rem rgba(72, 140, 241, 0.28);
+}
+
+/*ทำให้ปุ่มดู "กลืน" ไปกับธีมมืด แต่ยังมองเห็นว่าเป็นปุ่มที่มีขอบชัดเจนครับ*/
+html[data-theme='dark'] .btn-outline-primary, /*สไตล์สำหรับปุ่มแบบ outline ในธีมมืด*/
+html[data-theme='dark'] .btn-outline-secondary,
+html[data-theme='dark'] .btn-outline-success,
+html[data-theme='dark'] .btn-outline-danger,
+html[data-theme='dark'] .btn-outline-warning,
+html[data-theme='dark'] .btn-outline-info,
+html[data-theme='dark'] .btn-outline-light,
+html[data-theme='dark'] .btn-outline-dark {
+    color: #d9eaff;
+    border-color: rgba(170, 201, 246, 0.48);
+    background-color: rgba(14, 34, 64, 0.28);
+}
+
+/*เพื่อบอกคนใช้งานว่า "เฮ้ย! เมาส์คุณกำลังชี้ที่ปุ่มนี้อยู่นะ" ปุ่มจะดูสว่างขึ้นมาเหมือนมีแสงส่องถึงเมื่อโฮเวอร์ในธีมมืดครับ*/
+html[data-theme='dark'] .btn-outline-primary:hover, /*สไตล์สำหรับปุ่มแบบ outline เมื่อโฮเวอร์ในธีมมืด*/
+html[data-theme='dark'] .btn-outline-secondary:hover,
+html[data-theme='dark'] .btn-outline-success:hover,
+html[data-theme='dark'] .btn-outline-danger:hover,
+html[data-theme='dark'] .btn-outline-warning:hover,
+html[data-theme='dark'] .btn-outline-info:hover,
+html[data-theme='dark'] .btn-outline-light:hover,
+html[data-theme='dark'] .btn-outline-dark:hover {
+    color: #ffffff;
+    border-color: #9ec5ff;
+    background-color: rgba(79, 139, 230, 0.34);
+}
+
+
+/*สไตล์สำหรับ badge ในธีมมืดเพื่อให้ดูเข้ากับธีมและมีความคมชัดมากขึ้น*/
+html[data-theme='dark'] .badge.bg-success {
+    background-color: #2fcd8f !important;
+    color: #0a251b !important;
+}
+
+
+html[data-theme='dark'] .badge.bg-secondary {
+    background-color: #516784 !important;
+    color: #e8f2ff !important;
+}
+
+html[data-theme='dark'] .badge.bg-info {
+    background-color: #7bc8ff !important;
+    color: #0b2943 !important;
+}
+
+html[data-theme='dark'] .badge.bg-info.text-dark,
+html[data-theme='dark'] .badge.bg-light.text-dark {
+    color: #0b2943 !important;
+}
+
+html[data-theme='dark'] .badge.bg-warning {
+    background-color: #ffd45f !important;
+    color: #3b2a00 !important;
+}
+
+html[data-theme='dark'] .badge.bg-light {
+    background-color: #d8e9ff !important;
+    color: #0e2b4f !important;
+}
+
+html[data-theme='dark'] .alert {
+    border-color: rgba(150, 185, 237, 0.35);
+}
+
+html[data-theme='dark'] .alert-success {
+    background: linear-gradient(120deg, rgba(30, 114, 84, 0.45), rgba(23, 72, 58, 0.45));
+    color: #d7ffef;
+}
+
+html[data-theme='dark'] .alert-danger {
+    background: linear-gradient(120deg, rgba(139, 39, 65, 0.42), rgba(91, 24, 42, 0.42));
+    color: #ffdce5;
+}
+
+html[data-theme='dark'] .alert-warning {
+    background: linear-gradient(120deg, rgba(146, 96, 23, 0.46), rgba(93, 60, 15, 0.46));
+    color: #ffeec8;
+}
+
+html[data-theme='dark'] .alert-info {
+    background: linear-gradient(120deg, rgba(27, 96, 156, 0.45), rgba(18, 65, 111, 0.45));
+    color: #d8efff;
+}
+
+html[data-theme='dark'] .alert-secondary {
+    background: linear-gradient(120deg, rgba(65, 79, 103, 0.46), rgba(40, 51, 70, 0.46));
+    color: #dce8fb;
+}
+
+html[data-theme='dark'] .alert a,
+html[data-theme='dark'] .alert .alert-link {
+    color: #ffffff;
+    text-decoration-color: rgba(255, 255, 255, 0.7);
+}
+
+
+html[data-theme='dark'] .card,
+html[data-theme='dark'] .card-body,
+html[data-theme='dark'] .card-header,
+html[data-theme='dark'] .card-footer {
+    color: #e6f1ff;
+}
+
+html[data-theme='dark'] .table caption {
+    color: #c5dbfa;
+}
+
+html[data-theme='dark'] .list-group-item {
+    color: #dfecff;
+    background-color: rgba(14, 32, 58, 0.7);
+    border-color: rgba(148, 184, 236, 0.2);
+}
+
+.table, /*สไตล์สำหรับตารางในธีมปกติ*/
+.form-control, 
+.form-select {
+    border-color: rgba(35, 96, 190, 0.2);
+}
+
+/*สไตล์สำหรับหัวข้อของตารางในธีมปกติ*/
+.table thead th {
+    color: var(--text-600);
+    font-weight: 500; /*ความหนาของตัวอักษรในหัวข้อตาราง*/
+}
+
+/*สไตล์สำหรับเส้นขอบของตารางในธีมปกติ*/
+.btn-primary {
+    background: linear-gradient(120deg, var(--brand-700), var(--brand-500));
+    border: 0;
+}
+
+
+.btn-primary:hover {
+    filter: brightness(1.04);
+    transform: translateY(-1px);
+}
+
+
+.login-page-wrapper /*สไตล์สำหรับส่วน wrapper ของหน้าเข้าสู่ระบบเพื่อให้มีการจัดวางที่เหมาะสมและดูดีบนหน้าจอทุกขนาด*/ {
+    min-height: calc(100vh - 120px);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.login-split { /*สไตล์สำหรับส่วนแบ่งของหน้าเข้าสู่ระบบเพื่อให้มีการจัดวางที่เหมาะสมและดูดีบนหน้าจอทุกขนาด*/
+    display: grid; 
+    grid-template-columns: 1fr; 
+    min-height: 72vh; /*ความสูงขั้นต่ำของส่วนแบ่งหน้าเข้าสู่ระบบ*/
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid rgba(33, 95, 195, 0.24);
+    box-shadow: 0 26px 60px rgba(12, 64, 145, 0.2);
+}
+
+/*สไตล์สำหรับส่วน hero ของหน้าเข้าสู่ระบบเพื่อให้ดูโดดเด่นและมีความน่าสนใจมากขึ้น*/
+.login-hero {
+    position: relative;
+    padding: 2rem;
+    color: #eef6ff;
+    background: linear-gradient(145deg, #0e3f8e 0%, #2568d8 52%, #7ec1ff 100%);
+}
+
+/*เอฟเฟกต์สำหรับส่วน hero ของหน้าเข้าสู่ระบบเพื่อให้ดูมีมิติและน่าสนใจมากขึ้นด้วยการใช้ pseudo-element ::before และ ::after เพื่อสร้างวงกลมโปร่งแสงที่ลอยอยู่รอบๆ ส่วน hero*/
+.login-hero::before,
+.login-hero::after {
+    content: '';
+    position: absolute;
+    border-radius: 999px;
+    pointer-events: none;
+}
+
+/*สไตล์สำหรับวงกลมโปร่งแสงที่อยู่เหนือส่วน hero ของหน้าเข้าสู่ระบบเพื่อให้ดูมีมิติและน่าสนใจมากขึ้น*/
+.login-hero::before {
+    width: 280px;
+    height: 280px;
+    background: rgba(255, 255, 255, 0.14);
+    top: -90px;
+    right: -80px;
+}
+
+/*สไตล์สำหรับวงกลมโปร่งแสงที่อยู่ใต้ส่วน hero ของหน้าเข้าสู่ระบบเพื่อให้ดูมีมิติและน่าสนใจมากขึ้น*/
+.login-hero::after {
+    width: 220px; 
+    height: 220px;
+    background: rgba(255, 255, 255, 0.11);
+    bottom: -90px;
+    left: -60px;
+}
+
+.login-hero > * {
+    position: relative; 
+    z-index: 2; /*ทำให้เนื้อหาภายในส่วน hero อยู่เหนือวงกลมโปร่งแสงที่สร้างด้วย pseudo-element ::before และ ::after เพื่อให้เนื้อหาดูชัดเจนและไม่ถูกบดบังโดยวงกลมเหล่านั้น*/
+}
+
+/*สไตล์สำหรับหัวข้อหลักในส่วน hero ของหน้าเข้าสู่ระบบเพื่อให้ดูโดดเด่นและมีความน่าสนใจมากขึ้น*/
+.login-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(1.7rem, 2.4vw, 2.4rem);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.login-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.92rem;
+}
+
+.login-points { /*สไตล์สำหรับรายการจุดเด่นในส่วน hero ของหน้าเข้าสู่ระบบ*/
+    margin: 1.4rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.65rem;
+}
+
+/*สไตล์สำหรับแต่ละรายการจุดเด่นในส่วน hero ของหน้าเข้าสู่ระบบเพื่อให้ดูมีความน่าสนใจและโดดเด่นมากขึ้น*/
+.login-points li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.23);
+    border-radius: 12px;
+    padding: 0.6rem 0.8rem;
+}
+
+/*สไตล์สำหรับไอคอนในแต่ละรายการจุดเด่นในส่วน hero ของหน้าเข้าสู่ระบบเพื่อให้ดูมีความน่าสนใจและโดดเด่นมากขึ้น*/
+.login-form-pane {
+    padding: 2rem;
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.96), rgba(244, 250, 255, 0.92));
+}
+
+/*สไตล์สำหรับส่วนฟอร์มในหน้าเข้าสู่ระบบเมื่ออยู่ในธีมมืดเพื่อให้ดูเข้ากับธีมและมีความคมชัดมากขึ้น*/
+html[data-theme='dark'] .login-form-pane {
+    background: linear-gradient(160deg, rgba(9, 20, 38, 0.94), rgba(14, 29, 54, 0.88));
+}
+
+
+.dashboard-stagger-row .card {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+    animation: dash-stagger-in 520ms cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+/*เอฟเฟกต์การค่อยๆ ปรากฏแบบ "ขั้นบันได" (Staggered Animation)*/
+.dashboard-stagger-row > div:nth-child(1) .card { animation-delay: 60ms; }
+.dashboard-stagger-row > div:nth-child(2) .card { animation-delay: 140ms; }
+.dashboard-stagger-row > div:nth-child(3) .card { animation-delay: 220ms; }
+.dashboard-stagger-row > div:nth-child(4) .card { animation-delay: 300ms; }
+
+/*การกำหนดท่าทางแอนิเมชัน (Keyframes)*/
+@keyframes dash-stagger-in {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dashboard-stagger-row .card {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/*สไตล์สำหรับการเปลี่ยนสีธีมแบบนุ่มนวล (Smooth Theme Transition) เพื่อให้การเปลี่ยนแปลงระหว่างธีมสว่างและธีมมืดดูมีความลื่นไหลและไม่กระทันหันมากเกินไป*/
+html.theme-switching body, 
+html.theme-switching .top-nav,
+html.theme-switching .card,
+html.theme-switching .table,
+html.theme-switching .form-control,
+html.theme-switching .form-select,
+html.theme-switching .menu-link,
+html.theme-switching .lang-switch,
+html.theme-switching .theme-toggle,
+html.theme-switching .alert,
+html.theme-switching .badge {
+    transition: background 360ms ease, background-color 360ms ease, color 300ms ease, border-color 300ms ease, box-shadow 320ms ease;
+}
+
+/*สไตล์สำหรับการลดการเคลื่อนไหว (Reduced Motion) เพื่อให้ผู้ใช้ที่มีความต้องการลดการเคลื่อนไหวสามารถใช้งานเว็บไซต์ได้อย่างสะดวกสบายและไม่ทำให้เกิดอาการไม่สบายใจหรือเวียนหัวจากแอนิเมชันหรือเอฟเฟกต์ต่างๆ ในเว็บไซต์*/
+@media (prefers-reduced-motion: reduce) {
+    html.theme-switching body,
+    html.theme-switching .top-nav,
+    html.theme-switching .card,
+    html.theme-switching .table,
+    html.theme-switching .form-control,
+    html.theme-switching .form-select,
+    html.theme-switching .menu-link,
+    html.theme-switching .lang-switch,
+    html.theme-switching .theme-toggle,
+    html.theme-switching .alert,
+    html.theme-switching .badge {
+        transition: none;
+    }
+}
+
+/*สไตล์สำหรับส่วนฟอร์มในหน้าเข้าสู่ระบบเพื่อให้ดูมีความน่าสนใจและโดดเด่นมากขึ้น*/
+.login-form-pane .form-label {
+    font-weight: 500;
+    color: var(--text-600);
+}
+
+
+.login-form-pane .form-control {
+    border-radius: 12px;
+    padding: 0.62rem 0.75rem;
+}
+
+/*สไตล์สำหรับปุ่มส่งข้อมูลในฟอร์มของหน้าเข้าสู่ระบบเพื่อให้ดูมีความน่าสนใจและโดดเด่นมากขึ้น*/
+.login-submit {
+    border-radius: 12px;
+    font-weight: 500;
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
+}
+
+/*สไตล์สำหรับการจัดวางส่วนต่างๆ ในหน้าเข้าสู่ระบบเมื่อหน้าจอมีขนาดใหญ่ขึ้นเพื่อให้ดูมีความสมดุลและน่าสนใจมากขึ้น*/
+@media (min-width: 992px) {
+    .login-split {
+        grid-template-columns: 1.08fr 0.92fr;
+    }
+
+    .login-hero,
+    .login-form-pane {
+        padding: 2.4rem;
+    }
+}
+
+/*สไตล์สำหรับการจัดวางส่วนต่างๆ ในหน้าเข้าสู่ระบบเมื่อหน้าจอมีขนาดเล็กลงเพื่อให้ดูมีความสมดุลและน่าสนใจมากขึ้น*/
+@media (max-width: 991px) {
+    .top-nav .navbar-collapse {
+        margin-top: 0.9rem;
+        padding-top: 0.85rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.22);
+    }
+}

@@ -1,0 +1,81 @@
+[2026-04-18 15:15:58] channel=email employee=Sirichai destination=samitanunkongrod@gmail.com success=no details=ไม่พบไลบรารี PDF หรือ PHPMailer กรุณาติดตั้ง composer dependencies ก่อน
+[2026-04-18 20:16:07] channel=line employee=Sirichai destination=tonkawbz success=no details=LINE channel access token not configured.
+[2026-04-18 20:29:48] channel=email employee=Sirichai destination=samitanunkongrod@gmail.com success=no details=SMTP Error: Could not connect to SMTP host.
+[2026-04-18 20:31:55] channel=email employee=Sirichai destination=samitanunkongrod@gmail.com success=no details=SMTP Error: Could not connect to SMTP host.
+[2026-04-18 20:32:27] channel=line employee=Sirichai destination=tonkawbz success=no details=LINE channel access token not configured.
+[2026-04-18 20:47:19] channel=email employee=Sirichai destination=samitanunkongrod@gmail.com success=no details=Could not instantiate mail function.
+[2026-04-18 20:47:25] channel=line employee=Sirichai destination=tonkawbz success=no details=LINE channel access token not configured. Set config.php line_channel_access_token.
+[2026-04-18 21:06:31] channel=email employee=Sirichai destination=samitanunkongrod@gmail.com success=no details=Could not instantiate mail function.
+[2026-04-18 21:16:37] channel=email employee=Sirichai destination=samitanunkongrod@gmail.com success=no details=SMTP is not configured. Please set smtp_host, smtp_port, smtp_secure, smtp_username, smtp_password in config.php
+[2026-04-18 21:21:33] channel=email employee=Sirichai destination=samitanunkongrod@gmail.com success=no details=SMTP Error: Could not authenticate.
+[2026-04-18 22:59:45] channel=email employee=Sirichai destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-18 23:02:34] channel=email employee=Sirichai destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-19 14:33:37] channel=email employee=Thanapoom destination=tkkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-19 14:37:05] channel=email employee=Thanapoom destination=tkkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-19 14:53:38] channel=email employee=Thanapoom destination=tkkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-19 15:01:34] channel=email employee=Thanapoom destination=tkkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-19 15:48:59] channel=email employee=Sirichai destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-19 22:36:34] channel=email employee=Thanapoom destination=tkkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-20 09:21:11] channel=email employee=Sara destination=tonkhawsami@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-21 08:54:16] channel=email employee=Sandy destination=tonton8748@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-21 09:04:04] channel=email employee=Somchai N. destination=somchai@example.com success=no details=พนักงานยังไม่มีเลขบัตรประชาชน จึงไม่สามารถเข้ารหัส PDF ได้
+[2026-04-21 10:47:09] channel=email employee=Sirichai destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-21 10:47:10] channel=email employee=Somchai N. destination=somchai@example.com success=no details=พนักงานยังไม่มีเลขบัตรประชาชน จึงไม่สามารถเข้ารหัส PDF ได้
+[2026-04-21 10:47:14] channel=email employee=Thanapoom destination=tkkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-21 10:47:19] channel=email employee=Sirichai destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-21 10:47:24] channel=email employee=Sara destination=tonkhawsami@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-21 10:47:29] channel=email employee=Sandy destination=tonton8748@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-21 10:56:30] channel=email employee=Thanapoom destination=tkkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-21 11:09:48] channel=email employee=Thanapoom destination=tkkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-21 11:15:03] channel=email employee=Thanapoom destination=tkkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-21 11:17:09] channel=email employee=Thanapoom destination=tkkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-21 11:22:19] channel=email employee=Thanapoom destination=tkkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-21 11:52:15] channel=email employee=Thanapoom destination=tkkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-21 11:58:40] channel=email employee=Thanapoom destination=tkkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-21 12:00:15] channel=email employee=Thanapoom destination=tkkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-21 12:05:05] channel=email employee=Thanapoom destination=tkkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-21 12:10:43] channel=email employee=Thanapoom destination=tkkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-21 12:26:31] channel=email employee=Thanapoom destination=tkkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-23 08:38:07] channel=email employee=Teerada destination=samikhkg48@gmail.com success=no details=SMTP Error: Could not authenticate.
+[2026-04-23 08:38:26] channel=email employee=Thanapoom destination=tkkongrod@gmail.com success=no details=SMTP Error: Could not authenticate.
+[2026-04-23 08:43:39] channel=email employee=Teerada destination=samikhkg48@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-23 15:02:15] channel=email employee=Samitanun destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-23 16:05:17] channel=email employee=Somchai N. destination=somchai@example.com success=yes details=PHPMailer sent with attachment
+[2026-04-23 16:06:31] channel=email employee=Somchai N. destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-24 09:55:49] channel=email employee=Suda K. destination=suda@example.com success=yes details=PHPMailer sent with attachment
+[2026-04-24 09:56:04] channel=email employee=Sirichai destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-24 09:56:10] channel=email employee=Somchai N. destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-24 09:56:15] channel=email employee=Thanapoom destination=tkkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-24 09:56:20] channel=email employee=Sirichai destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-24 09:56:25] channel=email employee=Sara destination=tonkhawsami@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-24 09:56:31] channel=email employee=Sandy destination=tonton8748@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-24 09:56:38] channel=email employee=Teerada destination=samikhkg48@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-24 09:56:43] channel=email employee=Samitanun destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-24 09:56:48] channel=email employee=Suda K. destination=suda@example.com success=yes details=PHPMailer sent with attachment
+[2026-04-24 11:24:02] channel=email employee=Korapat destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-24 13:24:30] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-27 10:27:36] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-27 10:33:26] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-27 10:40:59] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-27 10:46:10] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-27 11:03:27] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-04-27 11:18:45] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-05-12 14:48:15] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-05-12 14:50:17] channel=email employee=สมิตานัน คงรอด destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-05-12 14:55:12] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-05-12 15:03:59] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-05-12 15:10:14] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-05-12 15:29:21] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-05-12 15:34:13] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-05-12 15:40:33] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-05-12 15:51:54] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-05-12 16:04:05] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-05-12 16:21:38] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-05-12 16:34:24] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-05-12 17:15:43] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-05-12 17:23:05] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-05-12 17:27:57] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-05-12 17:31:09] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-05-12 17:39:32] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-05-12 17:44:14] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
+[2026-05-12 17:53:18] channel=email employee=ศิริชัย เฉลิมพันธ์ destination=samitanunkongrod@gmail.com success=yes details=PHPMailer sent with attachment
