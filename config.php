@@ -9,7 +9,7 @@ declare(strict_types=1);
 return [
     'app_name' => 'Payroll System', /*ชื่อแอปพลิเคชัน*/
     'app_url' => 'http://localhost/New3', /*URL ของแอปพลิเคชัน*/
-    'db_path' => __DIR__ . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'payroll.sqlite', /*เส้นทางไปยังไฟล์ฐานข้อมูล SQLite*/
+    //'db_path' => __DIR__ . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'payroll.sqlite', /*เส้นทางไปยังไฟล์ฐานข้อมูล SQLite*/
     'session_name' => 'payroll_session', /*ชื่อ บัตรพนักงาน สำหรับระบบ*/
     'line_enabled' => false, /*เปิดใช้งานการแจ้งเตือนผ่าน LINE หรือไม่ ตอนนี้ปิดอยู่*/
     'line_notify_token' => '', // Deprecated for legacy mode
@@ -29,4 +29,10 @@ return [
     'password_max_age_days' => 90, /*อายุสูงสุดของรหัสผ่าน (90วัน)*/
     'password_min_length' => 6, /*ความยาวขั้นต่ำของรหัสผ่าน*/
     'default_timezone' => 'Asia/Bangkok', /*เขตเวลามาตรฐานของระบบ*/
+    'db_host' => 'mypayroll-samitanunkongrod-84fc.c.aivencloud.com',
+    'db_port' => 19199,
+    'db_name' => 'defaultdb',
+    'db_user' => 'avnadmin',
+    'db_pass' => 'AVNS_tqGpFTZTTXFgrIdsEqQ',
+    'db_ssl'  => true,
 ];
