@@ -29,10 +29,10 @@ return [
     'password_max_age_days' => 90, /*อายุสูงสุดของรหัสผ่าน (90วัน)*/
     'password_min_length' => 6, /*ความยาวขั้นต่ำของรหัสผ่าน*/
     'default_timezone' => 'Asia/Bangkok', /*เขตเวลามาตรฐานของระบบ*/
-    'db_host' => 'HOST_FROM_AIVEN',
-    'db_port' => 19199,
-    'db_name' => 'defaultdb',
-    'db_user' => 'avnadmin',
-    'db_pass' => 'PASSWORD_FROM_AIVEN',
+    'db_host' => getenv('DB_HOST'),
+    'db_port' => getenv('DB_PORT'),
+    'db_name' => getenv('DB_NAME'),
+    'db_user' => getenv('DB_USER'),
+    'db_pass' => getenv('DB_PASS'),
     'db_ssl'  => true,
 ];
