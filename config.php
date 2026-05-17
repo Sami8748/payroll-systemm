@@ -29,10 +29,10 @@ return [
     'password_max_age_days' => 90, /*อายุสูงสุดของรหัสผ่าน (90วัน)*/
     'password_min_length' => 6, /*ความยาวขั้นต่ำของรหัสผ่าน*/
     'default_timezone' => 'Asia/Bangkok', /*เขตเวลามาตรฐานของระบบ*/
-    'db_host' => 'mypayroll-samitanunkongrod-84fc.c.aivencloud.com',
+    'db_host' => 'HOST_FROM_AIVEN',
     'db_port' => 19199,
     'db_name' => 'defaultdb',
     'db_user' => 'avnadmin',
-    'db_pass' => 'DB_PASSWORD',
+    'db_pass' => 'PASSWORD_FROM_AIVEN',
     'db_ssl'  => true,
 ];
