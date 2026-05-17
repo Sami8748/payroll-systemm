@@ -33,6 +33,6 @@ return [
     'db_port' => 19199,
     'db_name' => 'defaultdb',
     'db_user' => 'avnadmin',
-    'db_pass' => 'AVNS_tqGpFTZTTXFgrIdsEqQ',
+    'db_pass' => 'DB_PASSWORD',
     'db_ssl'  => true,
 ];
