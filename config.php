@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 return [
     'app_name' => 'Payroll System', /*ชื่อแอปพลิเคชัน*/
-    'app_url' => 'http://localhost/New3', /*URL ของแอปพลิเคชัน*/
+    'app_url' => 'https://payroll-systemm-1.onrender.com', /*URL ของแอปพลิเคชัน*/
     //'db_path' => __DIR__ . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'payroll.sqlite', /*เส้นทางไปยังไฟล์ฐานข้อมูล SQLite*/
     'session_name' => 'payroll_session', /*ชื่อ บัตรพนักงาน สำหรับระบบ*/
     'line_enabled' => false, /*เปิดใช้งานการแจ้งเตือนผ่าน LINE หรือไม่ ตอนนี้ปิดอยู่*/
