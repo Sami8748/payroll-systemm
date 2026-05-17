@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: payroll-system
+    name: payroll-systemm
     env: php
     plan: free
     buildCommand: ""
