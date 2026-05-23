@@ -189,7 +189,7 @@ function t(string $key, array $replace = []): string
             'download_generated_report' => 'ดาวน์โหลดไฟล์รายงานล่าสุด',
             'payday_settings' => 'ตั้งค่าวันจ่ายเงิน',
             'scheduled_sending' => 'ตั้งเวลาส่งสลิปอัตโนมัติ',
-            'schedule_send_at' => 'วันเวลาในการส่ง',
+            'schedule_sent_at' => 'วันเวลาในการส่ง',
             'schedule_created' => 'สร้างรายการตั้งเวลาส่งเรียบร้อย',
             'scheduled_jobs' => 'รายการตั้งเวลาส่ง',
             'channel' => 'ช่องทาง',
@@ -490,7 +490,7 @@ function t(string $key, array $replace = []): string
             'download_generated_report' => 'Download latest generated report',
             'payday_settings' => 'Payday Settings',
             'scheduled_sending' => 'Scheduled Sending',
-            'schedule_send_at' => 'Scheduled Send Time',
+            'schedule_sent_at' => 'Scheduled Send Time',
             'schedule_created' => 'Scheduled send has been created.',
             'scheduled_jobs' => 'Scheduled Jobs',
             'channel' => 'Channel',
@@ -2093,13 +2093,13 @@ function generate_tax_report_rd_prep_txt(int $month, int $year): string
 
 function create_scheduled_send(int $month, int $year, string $channel, string $sendAt, int $createdBy): void
 {
-    $stmt = db()->prepare("INSERT INTO scheduled_sends (month, year, channel, send_at, status, success_count, failed_count, notes, created_by, created_at)
-        VALUES (:month, :year, :channel, :send_at, 'pending', 0, 0, '', :created_by, :created_at)");
+    $stmt = db()->prepare("INSERT INTO scheduled_sends (month, year, channel, sent_at, status, success_count, failed_count, notes, created_by, created_at)
+        VALUES (:month, :year, :channel, :sent_at, 'pending', 0, 0, '', :created_by, :created_at)");
     $stmt->execute([
         'month' => $month,
         'year' => $year,
         'channel' => $channel,
-        'send_at' => $sendAt,
+        'sent_at' => $sendAt,
         'created_by' => $createdBy,
         'created_at' => date('Y-m-d H:i:s'),
     ]);
@@ -2110,7 +2110,7 @@ function process_due_scheduled_sends(): array
     $pdo = db();
     $now = date('Y-m-d H:i:s');
 
-    $stmt = $pdo->prepare("SELECT * FROM scheduled_sends WHERE status = 'pending' AND send_at <= :now ORDER BY send_at ASC, id ASC");
+    $stmt = $pdo->prepare("SELECT * FROM scheduled_sends WHERE status = 'pending' AND sent_at <= :now ORDER BY sent_at ASC, id ASC");
     $stmt->execute(['now' => $now]);
     $jobs = $stmt->fetchAll();
 
