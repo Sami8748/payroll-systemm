@@ -136,6 +136,11 @@ function run_migrations(PDO $pdo): void
     add_column_if_missing($pdo, 'payroll_runs', 'other_deductions', "DOUBLE DEFAULT 0");
     add_column_if_missing($pdo, 'payroll_runs', 'welfare_loan_deduction', "DOUBLE DEFAULT 0");
 
+    add_column_if_missing($pdo, 'payroll_runs', 'paid_at', "DATETIME NULL");
+    add_column_if_missing($pdo, 'payroll_runs', 'slip_sent_at', "DATETIME NULL");
+    add_column_if_missing($pdo, 'payroll_runs', 'slip_channel', "VARCHAR(100) NULL");
+    add_column_if_missing($pdo, 'payroll_runs', 'notes', "TEXT NULL");
+
     // AUDIT LOG
     $pdo->exec("CREATE TABLE IF NOT EXISTS audit_logs (
         id INT AUTO_INCREMENT PRIMARY KEY,
