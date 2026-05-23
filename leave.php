@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         /* Confirm employee exists and is active non-manager */
-        $empStmt = $pdo->prepare('SELECT id, name FROM employees WHERE id = :id AND is_active = 1 AND position != "Manager"');
+        $empStmt = $pdo->prepare("SELECT id, name FROM employees WHERE id = :id AND is_active = 1 AND position != 'Manager'");
         $empStmt->execute(['id' => $employeeId]);
         $emp = $empStmt->fetch();
         if (!$emp) {
@@ -51,9 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         try {
-            $insertStmt = $pdo->prepare('INSERT INTO leave_records
+            $insertStmt = $pdo->prepare("INSERT INTO leave_records
                 (employee_id, leave_type, leave_date, days, note, recorded_by, created_at)
-                VALUES (:employee_id, :leave_type, :leave_date, :days, :note, :recorded_by, :created_at)');
+                VALUES (:employee_id, :leave_type, :leave_date, :days, :note, :recorded_by, :created_at)");
             $insertStmt->execute([
                 'employee_id' => $employeeId,
                 'leave_type'  => $leaveType,
@@ -83,9 +83,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         /* Only allow deleting records that belong to non-manager employees */
-        $checkStmt = $pdo->prepare('SELECT lr.id FROM leave_records lr
+        $checkStmt = $pdo->prepare("SELECT lr.id FROM leave_records lr
             JOIN employees e ON e.id = lr.employee_id
-            WHERE lr.id = :id AND e.position != "Manager"');
+            WHERE lr.id = :id AND e.position != 'Manager'");
         $checkStmt->execute(['id' => $leaveId]);
         if (!$checkStmt->fetch()) {
             flash('error', t('leave_delete_failed'));
@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         try {
-            $delStmt = $pdo->prepare('DELETE FROM leave_records WHERE id = :id');
+            $delStmt = $pdo->prepare("DELETE FROM leave_records WHERE id = :id");
             $delStmt->execute(['id' => $leaveId]);
             audit_log((int)$user['id'], 'delete_leave', "Deleted leave record ID {$leaveId}");
             flash('success', t('leave_deleted'));
@@ -115,10 +115,10 @@ $selectedEmpId = (int)($_GET['emp'] ?? 0);
 $currentYear   = (int)date('Y');
 
 /* Employee list (active non-manager) */
-$empListStmt = $pdo->query('SELECT id, emp_code, name, department, sick_leave_quota, annual_leave_quota
+$empListStmt = $pdo->query("SELECT id, emp_code, name, department, sick_leave_quota, annual_leave_quota
     FROM employees
-    WHERE is_active = 1 AND position != "Manager"
-    ORDER BY emp_code ASC');
+    WHERE is_active = 1 AND position != 'Manager'
+    ORDER BY emp_code ASC");
 $empList = $empListStmt->fetchAll();
 
 /* Build a quick map: employee_id → quota info */
@@ -142,11 +142,11 @@ if ($selectedEmpId > 0 && isset($empQuotaMap[$selectedEmpId])) {
     $selectedEmp = $empQuotaMap[$selectedEmpId];
 
     /* Usage this year */
-    $usageStmt = $pdo->prepare('SELECT leave_type, COALESCE(SUM(days), 0) AS used
+    $usageStmt = $pdo->prepare("SELECT leave_type, COALESCE(SUM(days), 0) AS used
         FROM leave_records
         WHERE employee_id = :emp_id
           AND substr(leave_date, 1, 4) = :year
-        GROUP BY leave_type');
+        GROUP BY leave_type");
     $usageStmt->execute(['emp_id' => $selectedEmpId, 'year' => (string)$currentYear]);
     foreach ($usageStmt->fetchAll() as $row) {
         if ($row['leave_type'] === 'sick')   { $usedSick   = (float)$row['used']; }
@@ -154,12 +154,12 @@ if ($selectedEmpId > 0 && isset($empQuotaMap[$selectedEmpId])) {
     }
 
     /* History */
-    $histStmt = $pdo->prepare('SELECT lr.id, lr.leave_type, lr.leave_date, lr.days, lr.note, u.full_name AS recorded_by_name, lr.created_at
+    $histStmt = $pdo->prepare("SELECT lr.id, lr.leave_type, lr.leave_date, lr.days, lr.note, u.full_name AS recorded_by_name, lr.created_at
         FROM leave_records lr
         JOIN users u ON u.id = lr.recorded_by
         WHERE lr.employee_id = :emp_id
         ORDER BY lr.leave_date DESC, lr.id DESC
-        LIMIT 100');
+        LIMIT 100");
     $histStmt->execute(['emp_id' => $selectedEmpId]);
     $leaveHistory = $histStmt->fetchAll();
 }
@@ -169,10 +169,10 @@ $empJsonData = [];
 foreach ($empList as $e) {
     $eId = (int)$e['id'];
     /* Per-employee year usage */
-    $uStmt = $pdo->prepare('SELECT leave_type, COALESCE(SUM(days),0) AS used
+    $uStmt = $pdo->prepare("SELECT leave_type, COALESCE(SUM(days),0) AS used
         FROM leave_records
         WHERE employee_id = :emp_id AND substr(leave_date, 1, 4) = :year
-        GROUP BY leave_type');
+        GROUP BY leave_type");
     $uStmt->execute(['emp_id' => $eId, 'year' => (string)$currentYear]);
     $uSick = 0.0; $uAnnual = 0.0;
     foreach ($uStmt->fetchAll() as $ur) {
