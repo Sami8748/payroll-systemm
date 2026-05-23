@@ -143,4 +143,36 @@ function run_migrations(PDO $pdo): void
         details TEXT,
         created_at DATETIME NOT NULL
     ) ENGINE=InnoDB");
+    
+    
+    // PAYSLIP FILES
+    $pdo->exec("CREATE TABLE IF NOT EXISTS payslip_files (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        payroll_id INT NOT NULL,
+        original_name VARCHAR(255) NOT NULL,
+        stored_name VARCHAR(255) NOT NULL,
+        uploaded_by INT NULL,
+        uploaded_at DATETIME NOT NULL
+    ) ENGINE=InnoDB");
+
+    // EMPLOYEE DOCUMENTS
+    $pdo->exec("CREATE TABLE IF NOT EXISTS employee_documents (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        employee_id INT NOT NULL,
+        doc_type VARCHAR(50) NOT NULL,
+        original_name VARCHAR(255) NOT NULL,
+        stored_name VARCHAR(255) NOT NULL,
+        uploaded_by INT NULL,
+        uploaded_at DATETIME NOT NULL
+    ) ENGINE=InnoDB");
+
+    // EMPLOYEE SALARY HISTORY
+    $pdo->exec("CREATE TABLE IF NOT EXISTS employee_salary_history (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        employee_id INT NOT NULL,
+        base_salary DOUBLE NOT NULL,
+        effective_date DATE NOT NULL,
+        changed_by INT NULL,
+        changed_at DATETIME NOT NULL
+    ) ENGINE=InnoDB");
 }
