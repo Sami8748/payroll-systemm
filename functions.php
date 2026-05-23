@@ -747,7 +747,7 @@ function hr_filter_clause(array $user): string
         return '';
     }
 
-    return ' AND e.position != "Manager" ';
+    return " AND e.position != 'Manager'";
 }
 
 /*ฟังก์ชันคำนวณเงินเดือนสุทธิ รับค่าเงินเดือนพื้นฐาน + โอที + โบนัส - หักต่างๆ = เงินเดือนสุทธิ พร้อมปัดเศษทศนิยม 2 ตำแหน่ง 

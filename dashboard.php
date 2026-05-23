@@ -15,9 +15,9 @@ require __DIR__ . '/partials_header.php';
 <?php
 $totals = $pdo->query('SELECT COUNT(*) AS users_count FROM users')->fetch();
 $employeeCount = $pdo->query('SELECT COUNT(*) AS employee_count FROM employees WHERE is_active = 1')->fetch();
-$activeHr = $pdo->query('SELECT COUNT(*) AS c FROM users WHERE role = "hr" AND is_active = 1')->fetch();
-$activeAcc = $pdo->query('SELECT COUNT(*) AS c FROM users WHERE role = "accounting" AND is_active = 1')->fetch();
-$itViewStmt = $pdo->query('SELECT name, department, position, is_active FROM employees ORDER BY name ASC LIMIT 20');
+$activeHr = $pdo->query("SELECT COUNT(*) AS c FROM users WHERE role = 'hr' AND is_active = 1")->fetch();
+$activeAcc = $pdo->query("SELECT COUNT(*) AS c FROM users WHERE role = 'accounting' AND is_active = 1")->fetch();
+$itViewStmt = $pdo->query("SELECT name, department, position, is_active FROM employees ORDER BY name ASC LIMIT 20");
 $itEmployees = $itViewStmt->fetchAll();
 ?>
 <div class="row g-3 mb-4 dashboard-stagger-row">
