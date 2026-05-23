@@ -107,6 +107,11 @@ function run_migrations(PDO $pdo): void
     add_column_if_missing($pdo, 'employees', 'start_date', "DATE");
     add_column_if_missing($pdo, 'employees', 'initial_base_salary', "DOUBLE DEFAULT 0");
 
+    add_column_if_missing($pdo, 'employees', 'end_date', "DATE NULL");
+    add_column_if_missing($pdo, 'employees', 'resignation_reason', "TEXT NULL");
+    add_column_if_missing($pdo, 'employees', 'sick_leave_quota', "INT NOT NULL DEFAULT 30");
+    add_column_if_missing($pdo, 'employees', 'annual_leave_quota', "INT NOT NULL DEFAULT 6");
+
     // PAYROLL
     $pdo->exec("CREATE TABLE IF NOT EXISTS payroll_runs (
         id INT AUTO_INCREMENT PRIMARY KEY,
