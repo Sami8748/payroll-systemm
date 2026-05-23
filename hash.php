@@ -1,2 +1,2 @@
 <?php
-echo password_hash('IT@1234', PASSWORD_DEFAULT);
+echo password_hash('ACC@1234', PASSWORD_DEFAULT);
