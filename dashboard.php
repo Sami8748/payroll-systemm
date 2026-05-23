@@ -387,7 +387,7 @@ $clause = hr_filter_clause($user);
 
 $sqlEmployees = 'SELECT COUNT(*) AS employee_count FROM employees e WHERE e.is_active = 1';
 if ($user['role'] === 'hr') {
-    $sqlEmployees .= "AND e.position != 'Manager'";
+    $sqlEmployees .= " AND e.position != 'Manager'";
 }
 $employeeCount = $pdo->query($sqlEmployees)->fetch();
 
