@@ -181,4 +181,16 @@ function run_migrations(PDO $pdo): void
         changed_by INT NULL,
         changed_at DATETIME NOT NULL
     ) ENGINE=InnoDB");
+    
+    // SCHEDULED SENDS
+    $pdo->exec("CREATE TABLE IF NOT EXISTS scheduled_sends (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        payroll_id INT NOT NULL,
+        channel ENUM('email','line') NOT NULL DEFAULT 'email',
+        scheduled_at DATETIME NOT NULL,
+        sent_at DATETIME NULL,
+        status ENUM('pending','sent','failed') NOT NULL DEFAULT 'pending',
+        error_message TEXT NULL,
+        created_at DATETIME NOT NULL
+    ) ENGINE=InnoDB");
 }
