@@ -351,7 +351,7 @@ $resignedStmt = $pdo->query(
     "SELECT id, emp_code, name, department, end_date, resignation_reason
      FROM employees
      WHERE is_active = 0
-       AND end_date IS NOT NULL AND end_date != ''
+       AND end_date IS NOT NULL
        AND position != 'Manager'
      ORDER BY end_date DESC
      LIMIT 50"
