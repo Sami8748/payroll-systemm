@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        $empCheck = $pdo->prepare('SELECT id FROM employees WHERE id = :id AND is_active = 1 AND position != "Manager"');
+        $empCheck = $pdo->prepare("SELECT id FROM employees WHERE id = :id AND is_active = 1 AND position != 'Manager'");
         $empCheck->execute(['id' => $employeeId]);
         if (!$empCheck->fetch()) {
             flash('error', t('employee_not_found'));
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $docType = trim((string)($_POST['doc_type'] ?? ''));
         $allowedDocTypes = ['national_id', 'bank_book', 'other'];
 
-        $empCheck = $pdo->prepare('SELECT id FROM employees WHERE id = :id AND is_active = 1 AND position != "Manager"');
+        $empCheck = $pdo->prepare("SELECT id FROM employees WHERE id = :id AND is_active = 1 AND position != 'Manager'");
         $empCheck->execute(['id' => $employeeId]);
         if ($employeeId <= 0 || !in_array($docType, $allowedDocTypes, true) || !$empCheck->fetch()) {
             flash('error', t('invalid_input'));
@@ -117,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($action === 'delete_employee_document') {
         $docId = (int)($_POST['doc_id'] ?? 0);
-        $docStmt = $pdo->prepare('SELECT d.id, d.stored_name FROM employee_documents d JOIN employees e ON e.id = d.employee_id WHERE d.id = :id AND e.position != "Manager"');
+        $docStmt = $pdo->prepare("SELECT d.id, d.stored_name FROM employee_documents d JOIN employees e ON e.id = d.employee_id WHERE d.id = :id AND e.position != 'Manager'");
         $docStmt->execute(['id' => $docId]);
         $doc = $docStmt->fetch();
 
@@ -214,8 +214,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ]);
 
             $employeeId = (int)$pdo->lastInsertId();
-            $historyStmt = $pdo->prepare('INSERT INTO employee_salary_history (employee_id, base_salary, effective_date, changed_by, changed_at)
-                VALUES (:employee_id, :base_salary, :effective_date, :changed_by, :changed_at)');
+            $historyStmt = $pdo->prepare("INSERT INTO employee_salary_history (employee_id, base_salary, effective_date, changed_by, changed_at)
+                VALUES (:employee_id, :base_salary, :effective_date, :changed_by, :changed_at)");
             $historyStmt->execute([
                 'employee_id' => $employeeId,
                 'base_salary' => $initialBaseSalary,
@@ -269,11 +269,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        $currentStmt = $pdo->prepare('SELECT id, emp_code, initial_base_salary
+        $currentStmt = $pdo->prepare("SELECT id, emp_code, initial_base_salary
             FROM employees
             WHERE id = :id
               AND is_active = 1
-              AND position != "Manager"');
+              AND position != 'Manager'");
         $currentStmt->execute(['id' => $employeeId]);
         $currentEmployee = $currentStmt->fetch();
         if (!$currentEmployee) {
@@ -288,7 +288,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             $pdo->beginTransaction();
 
-            $stmt = $pdo->prepare('UPDATE employees
+            $stmt = $pdo->prepare("UPDATE employees
                 SET name = :name,
                     address = :address,
                     email = :email,
@@ -299,7 +299,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     annual_leave_quota = :annual_leave_quota
                 WHERE id = :id
                   AND is_active = 1
-                  AND position != "Manager"');
+                  AND position != 'Manager'");
             $stmt->execute([
                 'name' => $name,
                 'address' => $address,
@@ -342,29 +342,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $listSql = 'SELECT id, emp_code, name, department, position, initial_base_salary, address, bank_name, bank_account, national_id, start_date, email, is_manager, is_active, sick_leave_quota, annual_leave_quota FROM employees WHERE is_active = 1';
-$listSql .= ' AND position != "Manager"';
+$listSql .= " AND position != 'Manager'";
 $listSql .= ' ORDER BY emp_code ASC';
 $employees = $pdo->query($listSql)->fetchAll();
 
 /* Resigned employees (last 90 days) */
 $resignedStmt = $pdo->query(
-    'SELECT id, emp_code, name, department, end_date, resignation_reason
+    "SELECT id, emp_code, name, department, end_date, resignation_reason
      FROM employees
      WHERE is_active = 0
-       AND end_date IS NOT NULL AND end_date != ""
-       AND position != "Manager"
+       AND end_date IS NOT NULL AND end_date != ''
+       AND position != 'Manager'
      ORDER BY end_date DESC
-     LIMIT 50'
+     LIMIT 50"
 );
 $resignedEmployees = $resignedStmt->fetchAll();
 
 /* Employee documents grouped by employee_id */
 $docsStmt = $pdo->query(
-    'SELECT d.id, d.employee_id, d.doc_type, d.original_name, d.stored_name, d.uploaded_at
+    "SELECT d.id, d.employee_id, d.doc_type, d.original_name, d.stored_name, d.uploaded_at
      FROM employee_documents d
      JOIN employees e ON e.id = d.employee_id
-     WHERE e.is_active = 1 AND e.position != "Manager"
-     ORDER BY d.uploaded_at DESC'
+     WHERE e.is_active = 1 AND e.position != 'Manager'
+     ORDER BY d.uploaded_at DESC"
 );
 $allDocRows = $docsStmt->fetchAll();
 $docsByEmployee = [];
@@ -373,7 +373,7 @@ foreach ($allDocRows as $docRow) {
 }
 
 
-$salaryHistorySql = 'SELECT
+$salaryHistorySql = "SELECT
                 h.id,
                 h.employee_id,
                 h.base_salary,
@@ -386,9 +386,9 @@ $salaryHistorySql = 'SELECT
         JOIN employees e ON e.id = h.employee_id
         LEFT JOIN users u ON u.id = h.changed_by
         WHERE e.is_active = 1
-            AND e.position != "Manager"
+            AND e.position != 'Manager'
         ORDER BY h.effective_date DESC, h.changed_at DESC, h.id DESC
-        LIMIT 200';
+        LIMIT 200";
 $salaryHistory = $pdo->query($salaryHistorySql)->fetchAll();
 
 require __DIR__ . '/partials_header.php';
