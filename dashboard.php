@@ -99,13 +99,13 @@ $itEmployees = $itViewStmt->fetchAll();
     $employeeCount = $pdo->query('SELECT COUNT(*) AS employee_count FROM employees WHERE is_active = 1')->fetch();
 
     $payrollSummaryStmt = $pdo->query(
-        'SELECT
+        "SELECT
             COUNT(*) AS payroll_count,
-            SUM(CASE WHEN pr.status = "paid" THEN 1 ELSE 0 END) AS paid_count,
-            SUM(CASE WHEN pr.status = "pending" THEN 1 ELSE 0 END) AS pending_count,
+            SUM(CASE WHEN pr.status = 'paid' THEN 1 ELSE 0 END) AS paid_count,
+            SUM(CASE WHEN pr.status = 'pending' THEN 1 ELSE 0 END) AS pending_count,
             COALESCE(SUM(pr.net_salary), 0) AS total_net,
-            COALESCE(SUM(CASE WHEN pr.status = "paid" THEN pr.net_salary ELSE 0 END), 0) AS paid_total
-        FROM payroll_runs pr'
+            COALESCE(SUM(CASE WHEN pr.status = 'paid' THEN pr.net_salary ELSE 0 END), 0) AS paid_total
+        FROM payroll_runs pr"
     );
     $payrollSummary = $payrollSummaryStmt->fetch();
 
@@ -392,13 +392,13 @@ if ($user['role'] === 'hr') {
 $employeeCount = $pdo->query($sqlEmployees)->fetch();
 
 $payrollSummaryStmt = $pdo->query(
-    'SELECT
+    "SELECT
         COUNT(*) AS payroll_count,
-        SUM(CASE WHEN pr.status = "paid" THEN 1 ELSE 0 END) AS paid_count,
+        SUM(CASE WHEN pr.status = 'paid' THEN 1 ELSE 0 END) AS paid_count,
         COALESCE(SUM(pr.net_salary), 0) AS total_net
     FROM payroll_runs pr
     JOIN employees e ON e.id = pr.employee_id
-    WHERE 1=1 ' . $clause
+    WHERE 1=1 $clause"
 );
 $payrollSummary = $payrollSummaryStmt->fetch();
 
