@@ -134,6 +134,7 @@ function run_migrations(PDO $pdo): void
     add_column_if_missing($pdo, 'payroll_runs', 'late_deduction', "DOUBLE DEFAULT 0");
     add_column_if_missing($pdo, 'payroll_runs', 'absence_deduction', "DOUBLE DEFAULT 0");
     add_column_if_missing($pdo, 'payroll_runs', 'other_deductions', "DOUBLE DEFAULT 0");
+    add_column_if_missing($pdo, 'payroll_runs', 'welfare_loan_deduction', "DOUBLE DEFAULT 0");
 
     // AUDIT LOG
     $pdo->exec("CREATE TABLE IF NOT EXISTS audit_logs (
