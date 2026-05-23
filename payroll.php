@@ -387,7 +387,7 @@ $listSql = "SELECT pr.id, pr.month, pr.year, pr.base_salary, pr.overtime, pr.bon
     FROM payroll_runs pr
     JOIN employees e ON e.id = pr.employee_id
     LEFT JOIN payslip_files pf ON pf.payroll_id = pr.id
-    WHERE 1=1';
+    WHERE 1=1";
 $listParams = [];
 if ($user['role'] === 'hr') {
     $listSql .= " AND e.position != 'Manager'";
