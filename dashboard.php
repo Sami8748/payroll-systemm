@@ -120,23 +120,23 @@ $itEmployees = $itViewStmt->fetchAll();
 
     /* Department salary breakdown */
     $deptSalaryStmt = $pdo->query(
-        'SELECT e.department, COALESCE(SUM(pr.net_salary), 0) AS total
+        "SELECT e.department, COALESCE(SUM(pr.net_salary), 0) AS total
          FROM payroll_runs pr
          JOIN employees e ON e.id = pr.employee_id
-         WHERE pr.status = "paid"
+         WHERE pr.status = 'paid'
          GROUP BY e.department
-         ORDER BY total DESC'
+         ORDER BY total DESC"
     );
     $deptSalary = $deptSalaryStmt->fetchAll();
 
     /* Monthly trend: last 6 paid months */
     $monthlyTrendStmt = $pdo->query(
-        'SELECT pr.month, pr.year, COALESCE(SUM(pr.net_salary), 0) AS total
+        "SELECT pr.month, pr.year, COALESCE(SUM(pr.net_salary), 0) AS total
          FROM payroll_runs pr
-         WHERE pr.status = "paid"
+         WHERE pr.status = 'paid'
          GROUP BY pr.year, pr.month
          ORDER BY pr.year DESC, pr.month DESC
-         LIMIT 6'
+         LIMIT 6"
     );
     $monthlyTrend = array_reverse($monthlyTrendStmt->fetchAll());
 
@@ -415,11 +415,11 @@ $latest = $latestStmt->fetchAll();
 $workAnniversaries = [];
 if ($user['role'] === 'hr') {
     $anniversaryStmt = $pdo->query(
-        'SELECT e.id, e.emp_code, e.name, e.department, e.start_date
+        "SELECT e.id, e.emp_code, e.name, e.department, e.start_date
         FROM employees e
         WHERE e.is_active = 1
-          AND e.position != "Manager"
-          AND IFNULL(e.start_date, "") != ""'
+          AND e.position != 'Manager'
+          AND IFNULL(e.start_date, '') != ''"
     );
     $anniversaryRows = $anniversaryStmt->fetchAll();
 
