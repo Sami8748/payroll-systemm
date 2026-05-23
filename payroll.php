@@ -358,14 +358,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$employeeSql = 'SELECT id, emp_code, name, department, position, initial_base_salary FROM employees WHERE (is_active = 1 OR (is_active = 0 AND end_date IS NOT NULL AND end_date != "" AND end_date >= date("now", "-90 days")))';
+$employeeSql = "SELECT id, emp_code, name, department, position, initial_base_salary
+FROM employees
+WHERE (
+    is_active = 1
+    OR (
+        is_active = 0
+        AND end_date IS NOT NULL
+        AND end_date >= DATE_SUB(CURDATE(), INTERVAL 90 DAY)
+    )
+)";
+
 if ($user['role'] === 'hr') {
-    $employeeSql .= ' AND position != "Manager"';
+    $employeeSql .= " AND position != 'Manager'";
 }
 $employeeSql .= ' ORDER BY name';
 $employees = $pdo->query($employeeSql)->fetchAll();
 
-$listSql = 'SELECT pr.id, pr.month, pr.year, pr.base_salary, pr.overtime, pr.bonus,
+$listSql = "SELECT pr.id, pr.month, pr.year, pr.base_salary, pr.overtime, pr.bonus,
     pr.late_deduction, pr.absence_deduction, pr.welfare_loan_deduction,
     pr.other_deductions, pr.social_security_deduction, pr.withholding_tax, pr.deductions, pr.net_salary,
         pr.status, pr.paid_at, pr.slip_sent_at, pr.slip_channel, pr.notes,
@@ -377,7 +387,7 @@ $listSql = 'SELECT pr.id, pr.month, pr.year, pr.base_salary, pr.overtime, pr.bon
     WHERE 1=1';
 $listParams = [];
 if ($user['role'] === 'hr') {
-    $listSql .= ' AND e.position != "Manager"';
+    $listSql .= " AND e.position != 'Manager'";
 }
 
 if ($filterMonth > 0) {
@@ -402,9 +412,9 @@ $yearFilterSql = 'SELECT DISTINCT pr.year
     WHERE 1=1';
 $yearFilterParams = [];
 if ($user['role'] === 'hr') {
-    $yearFilterSql .= ' AND e.position != "Manager"';
+    $yearFilterSql .= " AND e.position != 'Manager'";
 }
-$yearFilterSql .= ' ORDER BY pr.year DESC';
+$yearFilterSql .= " ORDER BY pr.year DESC";
 $yearStmt = $pdo->prepare($yearFilterSql);
 $yearStmt->execute($yearFilterParams);
 $availableYears = array_map(static fn(array $r): int => (int)$r['year'], $yearStmt->fetchAll());
@@ -412,13 +422,13 @@ $availableYears = array_values(array_unique(array_merge($availableYears, [2024, 
 rsort($availableYears);
 
 $welfareYear = $filterYear > 0 ? $filterYear : (int)date('Y');
-$welfareSql = 'SELECT COALESCE(SUM(pr.base_salary), 0) AS annual_salary_base
+$welfareSql = "SELECT COALESCE(SUM(pr.base_salary), 0) AS annual_salary_base
     FROM payroll_runs pr
     JOIN employees e ON e.id = pr.employee_id
-    WHERE pr.year = :year';
+    WHERE pr.year = :year";
 $welfareParams = ['year' => $welfareYear];
 if ($user['role'] === 'hr') {
-    $welfareSql .= ' AND e.position != "Manager"';
+    $welfareSql .= " AND e.position != 'Manager'";
 }
 $welfareStmt = $pdo->prepare($welfareSql);
 $welfareStmt->execute($welfareParams);
