@@ -2093,8 +2093,8 @@ function generate_tax_report_rd_prep_txt(int $month, int $year): string
 
 function create_scheduled_send(int $month, int $year, string $channel, string $sendAt, int $createdBy): void
 {
-    $stmt = db()->prepare('INSERT INTO scheduled_sends (month, year, channel, send_at, status, success_count, failed_count, notes, created_by, created_at)
-        VALUES (:month, :year, :channel, :send_at, "pending", 0, 0, "", :created_by, :created_at)');
+    $stmt = db()->prepare("INSERT INTO scheduled_sends (month, year, channel, send_at, status, success_count, failed_count, notes, created_by, created_at)
+        VALUES (:month, :year, :channel, :send_at, 'pending', 0, 0, '', :created_by, :created_at)");
     $stmt->execute([
         'month' => $month,
         'year' => $year,
@@ -2110,7 +2110,7 @@ function process_due_scheduled_sends(): array
     $pdo = db();
     $now = date('Y-m-d H:i:s');
 
-    $stmt = $pdo->prepare('SELECT * FROM scheduled_sends WHERE status = "pending" AND send_at <= :now ORDER BY send_at ASC, id ASC');
+    $stmt = $pdo->prepare("SELECT * FROM scheduled_sends WHERE status = 'pending' AND send_at <= :now ORDER BY send_at ASC, id ASC");
     $stmt->execute(['now' => $now]);
     $jobs = $stmt->fetchAll();
 
