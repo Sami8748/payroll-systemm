@@ -181,7 +181,7 @@ function run_migrations(PDO $pdo): void
         changed_by INT NULL,
         changed_at DATETIME NOT NULL
     ) ENGINE=InnoDB");
-    
+
     // SCHEDULED SENDS
     $pdo->exec("CREATE TABLE IF NOT EXISTS scheduled_sends (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -191,6 +191,10 @@ function run_migrations(PDO $pdo): void
         sent_at DATETIME NULL,
         status ENUM('pending','sent','failed') NOT NULL DEFAULT 'pending',
         error_message TEXT NULL,
+        created_by INT NULL,
+        updated_at DATETIME NULL,
         created_at DATETIME NOT NULL
     ) ENGINE=InnoDB");
+    add_column_if_missing($pdo, 'scheduled_sends', 'created_by', "INT NULL");
+    add_column_if_missing($pdo, 'scheduled_sends', 'updated_at', "DATETIME NULL");
 }
