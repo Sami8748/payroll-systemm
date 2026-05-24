@@ -168,6 +168,8 @@ function run_migrations(PDO $pdo): void
     add_column_if_missing($pdo, 'payroll_runs', 'leave_encashment', "DECIMAL(10,2) DEFAULT 0");
     add_column_if_missing($pdo, 'payroll_runs', 'created_by', "INT NULL");
     add_column_if_missing($pdo, 'payroll_runs', 'paid_by', "INT NULL");
+    add_column_if_missing($pdo, 'payroll_runs', 'slip_sent_by', "INT NULL");
+
     // LEAVE RECORDS
     $pdo->exec("CREATE TABLE IF NOT EXISTS leave_records (
         id INT AUTO_INCREMENT PRIMARY KEY,
