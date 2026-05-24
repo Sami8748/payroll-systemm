@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             flash('success', t('payroll_created') . ' ' . $socialSecurityMessage . ' ' . $progressiveMessage);
         } catch (Throwable $e) {
-            flash('error', t('payroll_create_failed'));
+            die($e->getMessage());
         }
 
         header('Location: payroll.php' . $redirectQuery);
