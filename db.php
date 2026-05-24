@@ -199,12 +199,16 @@ function run_migrations(PDO $pdo): void
     // PAYSLIP FILES
     $pdo->exec("CREATE TABLE IF NOT EXISTS payslip_files (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        payroll_id INT NOT NULL,
-        original_name VARCHAR(255) NOT NULL,
-        stored_name VARCHAR(255) NOT NULL,
-        uploaded_by INT NULL,
-        uploaded_at DATETIME NOT NULL
-    ) ENGINE=InnoDB");
+        payroll_id INT NOT NULL UNIQUE,
+        file_path TEXT NOT NULL,
+        file_name VARCHAR(255) NOT NULL,
+        download_token VARCHAR(255) NULL,
+        expires_at DATETIME NULL,
+        generated_by INT NULL,
+        generated_at DATETIME NULL,
+        updated_at DATETIME NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    ");
 
     // EMPLOYEE DOCUMENTS
     $pdo->exec("CREATE TABLE IF NOT EXISTS employee_documents (

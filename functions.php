@@ -1213,16 +1213,19 @@ function upsert_payslip_file(int $payrollId, string $filePath, string $fileName,
     $now = date('Y-m-d H:i:s');
     $expiresAt = date('Y-m-d H:i:s', strtotime('+7 days'));
 
-    $stmt = db()->prepare('INSERT INTO payslip_files (payroll_id, file_path, file_name, download_token, expires_at, generated_by, generated_at, updated_at)
-        VALUES (:payroll_id, :file_path, :file_name, :download_token, :expires_at, :generated_by, :generated_at, :updated_at)
-        ON CONFLICT(payroll_id) DO UPDATE SET
-            file_path=excluded.file_path,
-            file_name=excluded.file_name,
-            download_token=excluded.download_token,
-            expires_at=excluded.expires_at,
-            generated_by=excluded.generated_by,
-            generated_at=excluded.generated_at,
-            updated_at=excluded.updated_at');
+
+    $stmt = db()->prepare('INSERT INTO payslip_files
+        (payroll_id, file_path, file_name, download_token, expires_at, generated_by, generated_at, updated_at)
+        VALUES(:payroll_id, :file_path, :file_name, :download_token, :expires_at, :generated_by, :generated_at, :updated_at)
+        ON DUPLICATE KEY UPDATE
+        file_path = VALUES(file_path),
+        file_name = VALUES(file_name),
+        download_token = VALUES(download_token),
+        expires_at = VALUES(expires_at),
+        generated_by = VALUES(generated_by),
+        generated_at = VALUES(generated_at),
+        updated_at = VALUES(updated_at)');
+
     $stmt->execute([
         'payroll_id' => $payrollId,
         'file_path' => $filePath,
