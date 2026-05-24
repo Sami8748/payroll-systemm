@@ -852,8 +852,12 @@ function payroll_period_end_date(int $month, int $year): ?DateTimeImmutable
         return null;
     }
 
-    $daysInMonth = (int)cal_days_in_month(CAL_GREGORIAN, $month, $gregorianYear);
-    return DateTimeImmutable::createFromFormat('!Y-n-j', $gregorianYear . '-' . $month . '-' . $daysInMonth) ?: null;
+    $daysInMonth = (int)date('t', strtotime($gregorianYear . '-' . $month . '-01'));
+
+    return DateTimeImmutable::createFromFormat(
+        '!Y-n-j',
+        $gregorianYear . '-' . $month . '-' . $daysInMonth
+    ) ?: null;
 }
 
 /*นโยบายการคำนวณปีที่ทำงานของพนักงาน คำนวณจากวันที่เริ่มทำงานจนถึงวันสุดท้าย*/
