@@ -108,10 +108,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $net = round(calculate_net_salary($finalBaseSalary, $overtime, $bonus, $deductions) + $severancePay + $leaveEncashment, 2);
 
         try {
-            $stmt = $pdo->prepare('INSERT INTO payroll_runs
+            $stmt = $pdo->prepare("INSERT INTO payroll_runs
                 (employee_id, month, year, base_salary, overtime, bonus, late_deduction, absence_deduction, welfare_loan_deduction, other_deductions, social_security_deduction, withholding_tax, deductions, severance_pay, leave_encashment, net_salary, status, notes, created_by, created_at, updated_at)
                 VALUES
-                (:employee_id, :month, :year, :base_salary, :overtime, :bonus, :late_deduction, :absence_deduction, :welfare_loan_deduction, :other_deductions, :social_security_deduction, :withholding_tax, :deductions, :severance_pay, :leave_encashment, :net_salary, "draft", :notes, :created_by, :created_at, :updated_at)');
+                (:employee_id, :month, :year, :base_salary, :overtime, :bonus, :late_deduction, :absence_deduction, :welfare_loan_deduction, :other_deductions, :social_security_deduction, :withholding_tax, :deductions, :severance_pay, :leave_encashment, :net_salary, 'draft', :notes, :created_by, :created_at, :updated_at)");
 
             $now = date('Y-m-d H:i:s');
             $stmt->execute([
