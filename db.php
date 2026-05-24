@@ -113,8 +113,7 @@ function run_migrations(PDO $pdo): void
     add_column_if_missing($pdo, 'employees', 'annual_leave_quota', "INT NOT NULL DEFAULT 6");
 
     // PAYROLL
-    $pdo->exec("
-    CREATE TABLE IF NOT EXISTS payroll_runs (
+    $pdo->exec("CREATE TABLE IF NOT EXISTS payroll_runs (
         id INT AUTO_INCREMENT PRIMARY KEY,
 
         employee_id INT NOT NULL,
