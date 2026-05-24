@@ -1610,15 +1610,11 @@ function send_payslip_email(array $employee, array $payroll): bool
 
         $mail->isSMTP();
         $mail->Host = $smtpHost;
+        $mail->SMTPAuth = true;
+        $mail->Username = $smtpUsername;
+        $mail->Password = $smtpPassword;
+        $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = (int)$config['smtp_port'];
-        $mail->SMTPAuth = $smtpUsername !== '';
-        if ($smtpUsername !== '') {
-            $mail->Username = $smtpUsername;
-            $mail->Password = $smtpPassword;
-        }
-        if ((string)$config['smtp_secure'] !== '') {
-            $mail->SMTPSecure = (string)$config['smtp_secure'];
-        }
 
         $mail->CharSet = 'UTF-8';
         $mail->setFrom((string)$config['mail_from'], (string)$config['mail_from_name']);
