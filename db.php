@@ -113,21 +113,45 @@ function run_migrations(PDO $pdo): void
     add_column_if_missing($pdo, 'employees', 'annual_leave_quota', "INT NOT NULL DEFAULT 6");
 
     // PAYROLL
-    $pdo->exec("CREATE TABLE IF NOT EXISTS payroll_runs (
+    $pdo->exec("
+    CREATE TABLE IF NOT EXISTS payroll_runs (
         id INT AUTO_INCREMENT PRIMARY KEY,
+
         employee_id INT NOT NULL,
         month INT NOT NULL,
         year INT NOT NULL,
-        base_salary DOUBLE NOT NULL,
-        overtime DOUBLE DEFAULT 0,
-        bonus DOUBLE DEFAULT 0,
-        deductions DOUBLE DEFAULT 0,
-        net_salary DOUBLE NOT NULL,
-        status ENUM('draft','paid') DEFAULT 'draft',
+
+        base_salary DECIMAL(10,2) DEFAULT 0,
+        overtime DECIMAL(10,2) DEFAULT 0,
+        bonus DECIMAL(10,2) DEFAULT 0,
+
+        late_deduction DECIMAL(10,2) DEFAULT 0,
+        absence_deduction DECIMAL(10,2) DEFAULT 0,
+        welfare_loan_deduction DECIMAL(10,2) DEFAULT 0,
+        other_deductions DECIMAL(10,2) DEFAULT 0,
+
+        social_security_deduction DECIMAL(10,2) DEFAULT 0,
+        withholding_tax DECIMAL(10,2) DEFAULT 0,
+        deductions DECIMAL(10,2) DEFAULT 0,
+
+        net_salary DECIMAL(10,2) DEFAULT 0,
+
+        status VARCHAR(50) DEFAULT 'pending',
+
+        paid_at DATETIME NULL,
+        slip_sent_at DATETIME NULL,
+        slip_channel VARCHAR(50) NULL,
+
+        notes TEXT NULL,
+
         created_at DATETIME NOT NULL,
-        updated_at DATETIME NOT NULL,
-        UNIQUE KEY uniq_emp_month_year (employee_id, month, year)
-    ) ENGINE=InnoDB");
+        updated_at DATETIME NULL,
+
+        UNIQUE KEY uniq_emp_month_year (employee_id, month, year),
+
+        FOREIGN KEY (employee_id) REFERENCES employees(id)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    ");
 
     add_column_if_missing($pdo, 'payroll_runs', 'social_security_deduction', "DOUBLE DEFAULT 0");
     add_column_if_missing($pdo, 'payroll_runs', 'withholding_tax', "DOUBLE DEFAULT 0");
