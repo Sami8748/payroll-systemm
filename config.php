@@ -19,7 +19,7 @@ return [
     'smtp_port' => 587, /*พอร์ต SMTP สำหรับส่งอีเมล*/
     'smtp_secure' => 'tls', /*ประเภทการเข้ารหัสสำหรับ SMTP*/
     'smtp_username' => 'tonkhawsami@gmail.com', /*ชื่อผู้ใช้ SMTP*/
-    'smtp_password' => 'seue xddj sjtp qspo ', /*รหัสผ่าน SMTP - ใช้ App Password จาก Google*/
+    'smtp_password' => 'spdn yzpy ltng viuz', /*รหัสผ่าน SMTP - ใช้ App Password จาก Google*/
     'mail_from' => 'tonkhawsami@gmail.com', /*อีเมลผู้ส่ง*/
     'mail_from_name' => 'Payroll System', /*ชื่อผู้ส่งอีเมล*/
     'welfare_fund_rate_percent' => 0.20, /*อัตราส่วนของกองทุนเงินทดแทน0.20%*/
