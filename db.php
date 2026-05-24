@@ -141,6 +141,22 @@ function run_migrations(PDO $pdo): void
     add_column_if_missing($pdo, 'payroll_runs', 'slip_channel', "VARCHAR(100) NULL");
     add_column_if_missing($pdo, 'payroll_runs', 'notes', "TEXT NULL");
 
+    // LEAVE RECORDS
+    $pdo->exec("CREATE TABLE IF NOT EXISTS leave_records (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        employee_id INT NOT NULL,
+        leave_type VARCHAR(50) NOT NULL,
+        start_date DATE NOT NULL,
+        end_date DATE NOT NULL,
+        days_count INT DEFAULT 1,
+        reason TEXT,
+        status ENUM('pending','approved','rejected') DEFAULT 'pending',
+        created_by INT NULL,
+        approved_by INT NULL,
+        approved_at DATETIME NULL,
+        created_at DATETIME NOT NULL
+    ) ENGINE=InnoDB");
+
     // AUDIT LOG
     $pdo->exec("CREATE TABLE IF NOT EXISTS audit_logs (
         id INT AUTO_INCREMENT PRIMARY KEY,
