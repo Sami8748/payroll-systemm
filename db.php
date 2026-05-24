@@ -157,6 +157,7 @@ function run_migrations(PDO $pdo): void
         created_at DATETIME NOT NULL
     ) ENGINE=InnoDB");
     add_column_if_missing($pdo, 'leave_records', 'days', "INT DEFAULT 1");
+    add_column_if_missing($pdo, 'leave_records', 'leave_date', "DATE NULL");
 
     // AUDIT LOG
     $pdo->exec("CREATE TABLE IF NOT EXISTS audit_logs (
