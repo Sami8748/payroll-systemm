@@ -61,7 +61,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $leaveEncashment = max(0.0, (float)($_POST['leave_encashment'] ?? 0));
         $notes = trim((string)($_POST['notes'] ?? ''));
 
-        $empStmt = $pdo->prepare("SELECT id, name, position, start_date, end_date FROM employees WHERE id = :id AND (is_active = 1 OR (is_active = 0 AND end_date IS NOT NULL AND end_date != ''))");
+        $empStmt = $pdo->prepare("
+            SELECT id, name, position, start_date, end_date
+            FROM employees
+            WHERE id = :id
+            AND (
+                is_active = 1
+                OR (
+                    is_active = 0
+                    AND end_date IS NOT NULL
+                )
+            )
+        ");        
         $empStmt->execute(['id' => $employeeId]);
         $employee = $empStmt->fetch();
 
