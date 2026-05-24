@@ -174,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $payrollId = (int)($_POST['payroll_id'] ?? 0);
-        $stmt = $pdo->prepare('UPDATE payroll_runs SET status = "paid", paid_at = :paid_at, paid_by = :paid_by, updated_at = :updated_at WHERE id = :id');
+        $stmt = $pdo->prepare("UPDATE payroll_runs SET status = 'paid', paid_at = :paid_at, paid_by = :paid_by, updated_at = :updated_at WHERE id = :id");
         $stmt->execute([
             'paid_at' => date('Y-m-d H:i:s'),
             'paid_by' => $user['id'],
