@@ -61,8 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $leaveEncashment = max(0.0, (float)($_POST['leave_encashment'] ?? 0));
         $notes = trim((string)($_POST['notes'] ?? ''));
 
-        $empStmt = $pdo->prepare("
-            SELECT id, name, position, start_date, end_date
+        $empStmt = $pdo->prepare(" SELECT id, name, position, start_date, end_date
             FROM employees
             WHERE id = :id
             AND (
@@ -369,8 +368,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$employeeSql = "
-SELECT id, emp_code, name, department, position, initial_base_salary
+$employeeSql = "SELECT id, emp_code, name, department, position, initial_base_salary
 FROM employees
 WHERE (
     is_active = 1
@@ -379,8 +377,7 @@ WHERE (
         AND end_date IS NOT NULL
         AND end_date >= DATE_SUB(CURDATE(), INTERVAL 90 DAY)
     )
-)
-";
+)";
 
 if ($user['role'] === 'hr') {
     $employeeSql .= " AND position != 'Manager'";
