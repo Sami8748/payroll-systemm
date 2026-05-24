@@ -1608,13 +1608,25 @@ function send_payslip_email(array $employee, array $payroll): bool
         $smtpUsername = trim((string)$config['smtp_username']);
         $smtpPassword = trim((string)$config['smtp_password']);
 
-        $mail->isSMTP();
+ /*       $mail->isSMTP();
         $mail->Host = $smtpHost;
         $mail->SMTPAuth = true;
         $mail->Username = $smtpUsername;
         $mail->Password = $smtpPassword;
         $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = (int)$config['smtp_port'];
+        $mail->Port = (int)$config['smtp_port'];*/
+
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = $smtpUsername;
+        $mail->Password = $smtpPassword;
+        $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+        $mail->Timeout = 30;
+        
+        $mail->SMTPDebug = 2;
+        $mail->Debugoutput = 'error_log';
 
         $mail->CharSet = 'UTF-8';
         $mail->setFrom((string)$config['mail_from'], (string)$config['mail_from_name']);
