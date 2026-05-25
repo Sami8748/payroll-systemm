@@ -1765,6 +1765,12 @@ function send_test_email(string $to, ?string &$error = null): bool
         $smtpUsername = trim((string)$config['smtp_username']);
         $smtpPassword = trim((string)$config['smtp_password']);
 
+    die(
+        'HOST=' . $smtpHost .
+        ' | USER=' . $smtpUsername .
+        ' | PASS=' . substr($smtpPassword, 0, 20)
+    );
+
         $mail->isSMTP();
         $mail->Host = $smtpHost;
         $mail->Port = (int)$config['smtp_port'];
