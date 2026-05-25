@@ -1765,11 +1765,7 @@ function send_test_email(string $to, ?string &$error = null): bool
         $smtpUsername = trim((string)$config['smtp_username']);
         $smtpPassword = trim((string)$config['smtp_password']);
 
-    die(
-        'HOST=' . $smtpHost .
-        ' | USER=' . $smtpUsername .
-        ' | PASS=' . substr($smtpPassword, 0, 20)
-    );
+
 
         $mail->isSMTP();
         $mail->Host = $smtpHost;
@@ -1778,6 +1774,10 @@ function send_test_email(string $to, ?string &$error = null): bool
         if ($smtpUsername !== '') {
             $mail->Username = $smtpUsername;
             $mail->Password = $smtpPassword;
+
+            error_log('SMTP HOST=' . $smtpHost);
+            error_log('SMTP USER=' . $smtpUsername);
+            error_log('SMTP PASS=' . substr($smtpPassword, 0, 20));
         }
         if ((string)$config['smtp_secure'] !== '') {
             $mail->SMTPSecure = (string)$config['smtp_secure'];
