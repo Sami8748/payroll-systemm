@@ -1611,11 +1611,11 @@ function send_payslip_email(array $employee, array $payroll): bool
 
 
         $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
+        $mail->Host = 'smtp-relay.brevo.com';
         $mail->SMTPAuth = true;
         $mail->Username = $smtpUsername;
         $mail->Password = $smtpPassword;
-        $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
         $mail->SMTPDebug = 2;

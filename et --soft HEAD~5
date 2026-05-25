@@ -1,0 +1,55 @@
+[33mc30c8fe[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Clean SMTP configuration
+[33m1899d8b[m Move SMTP config to environment variables
+[33m6003634[m[33m ([m[1;31morigin/main[m[33m)[m Enable SMTP debug
+[33me9422ed[m Fix SMTP Gmail connection
+[33m4b86c6a[m Fix SMTP configuration
+[33md69f7b6[m Fix SMTP app password formatting
+[33m537ff6f[m Add slip_sent_by column
+[33mcc5b0a4[m Update Gmail app password
+[33m701e9bf[m Fix paid string quotes for MySQL
+[33m4ad74ce[m Update payslip_files schema
+[33m76e5f24[m Fix draft string in payroll insert
+[33mf2537d0[m Show payroll insert error
+[33me5dd393[m Add missing payroll_runs columns
+[33m2609b05[m Update payroll_runs schema
+[33mbb9a11e[m Update payroll_runs schema
+[33m14bfeff[m Fix cal_days_in_month error
+[33m2d3a94f[m Fix invalid DATE comparison in payroll query
+[33medc5aed[m Fix payroll employee query empty string condition
+[33mde113ad[m Add missing leave_records columns
+[33m4c99778[m Add days column to leave_records
+[33me45dfe3[m Create leave_records table migration
+[33mdc6536a[m Generate ACC password hash
+[33m4394219[m Add missing columns to scheduled_sends
+[33ma4147db[m Fix sent_at column name
+[33m97c5db9[m Fix pending status SQL query
+[33m64b74ab[m Add scheduled_sends table migration
+[33m04c0161[m Generate ACC hash
+[33m6323f2c[m Add hash generator
+[33m1b0d9f1[m Add missing payroll columns
+[33ma3a2876[m Add welfare loan deduction column
+[33md3c9db0[m Add missing payroll tables
+[33m62375bc[m Fix payroll SQL string quote
+[33md29db77[m Fix payroll query parse error
+[33mcb636f6[m Fix MySQL syntax in payroll
+[33m7fc203b[m fix leave manager query
+[33m167af9a[m fix invalid date query
+[33mf323daa[m fix manager sql
+[33m2721b06[m add leave quota columns
+[33m3ff7194[m fix hr filter mysql
+[33mcb814f3[m fix mysql quotes
+[33me5240bb[m Fix MySQL quotes
+[33m743cf2e[m Fix dashboard SQL syntax
+[33m3452908[m fix mysql quotes
+[33m36187da[m use env database
+[33mc8def98[m fix db password
+[33m960204a[m fix mysql driver for render
+[33m81fdfd0[m fix mysql driver
+[33mee67d6d[m update app url
+[33m299ea91[m clean config remove secret
+[33mdf868d6[m update
+[33m05ddbbf[m add docker deploy
+[33m34db1ea[m fix render
+[33m27c1733[m add render config
+[33mc33d51b[m first commit
+[33m3a3b840[m first commit
