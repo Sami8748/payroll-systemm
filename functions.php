@@ -1616,7 +1616,7 @@ function send_payslip_email(array $employee, array $payroll): bool
         $mail->Username = $smtpUsername;
         $mail->Password = $smtpPassword;
         $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
+        $mail->Port = 2525;
 
         $mail->SMTPDebug = 2;
         $mail->Debugoutput = 'error_log';
