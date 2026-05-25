@@ -1611,18 +1611,13 @@ function send_payslip_email(array $employee, array $payroll): bool
 
 
         $mail->isSMTP();
-        $mail->Host = 'smtp-relay.brevo.com';
+        $mail->Host = $smtpHost;
         $mail->SMTPAuth = true;
         $mail->Username = $smtpUsername;
         $mail->Password = $smtpPassword;
 
-        error_log('SMTP HOST=' . $mail->Host);
-        error_log('SMTP USER=' . $smtpUsername);
-        error_log('SMTP PASS=' . substr($smtpPassword, 0, 20));
-        
-        $mail->SMTPSecure = 'tls';
-        $mail->Port = 2525;
-
+        $mail->SMTPSecure = (string)$config['smtp_secure'];
+        $mail->Port = (int)$config['smtp_port'];
         $mail->SMTPDebug = 2;
         $mail->Debugoutput = 'error_log';
 
