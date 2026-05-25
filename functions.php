@@ -1615,6 +1615,11 @@ function send_payslip_email(array $employee, array $payroll): bool
         $mail->SMTPAuth = true;
         $mail->Username = $smtpUsername;
         $mail->Password = $smtpPassword;
+
+        error_log('SMTP HOST=' . $mail->Host);
+        error_log('SMTP USER=' . $smtpUsername);
+        error_log('SMTP PASS=' . substr($smtpPassword, 0, 20));
+        
         $mail->SMTPSecure = 'tls';
         $mail->Port = 2525;
 
@@ -1775,9 +1780,7 @@ function send_test_email(string $to, ?string &$error = null): bool
             $mail->Username = $smtpUsername;
             $mail->Password = $smtpPassword;
 
-            error_log('SMTP HOST=' . $smtpHost);
-            error_log('SMTP USER=' . $smtpUsername);
-            error_log('SMTP PASS=' . substr($smtpPassword, 0, 20));
+
         }
         if ((string)$config['smtp_secure'] !== '') {
             $mail->SMTPSecure = (string)$config['smtp_secure'];
