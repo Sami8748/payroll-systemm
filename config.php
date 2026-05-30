@@ -17,7 +17,7 @@ return [
     'line_api_base' => 'https://api.line.me/v2/bot/message/push',
 
 //    'mail_from' => 'ac634f001@smtp-brevo.com',
-    'mail_from' => 'tonkhawsami@gmail.com', /*อีเมลผู้ส่ง*/
+    'mail_from' => 'samitanunkongrod@gmail.com', /*อีเมลผู้ส่ง*/
     'mail_from_name' => 'Payroll System', /*ชื่อผู้ส่งอีเมล*/
     'welfare_fund_rate_percent' => 0.20, /*อัตราส่วนของกองทุนเงินทดแทน0.20%*/
     'company_tax_id' => '', /*หมายเลขประจำตัวผู้เสียภาษีของบริษัท ที่ระบบจะดึงไปใส่หัวกระดาษตอนทำไฟล์ สปส. 1-10 และ ภ.ง.ด. 1*/
