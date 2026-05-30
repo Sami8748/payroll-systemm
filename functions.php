@@ -1609,6 +1609,7 @@ function send_payslip_email(array $employee, array $payroll): bool
         $smtpPassword = trim((string)$config['smtp_password']);
 
 
+        
 
         $mail->isSMTP();
         $mail->Host = $smtpHost;
@@ -1616,8 +1617,11 @@ function send_payslip_email(array $employee, array $payroll): bool
         $mail->Username = $smtpUsername;
         $mail->Password = $smtpPassword;
 
-        $mail->SMTPSecure = (string)$config['smtp_secure'];
-        $mail->Port = (int)$config['smtp_port'];
+        $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+
+        $mail->Timeout = 30;
+        $mail->SMTPKeepAlive = false;
         
         $mail->SMTPDebug = 2;
         $mail->Debugoutput = 'error_log';
@@ -1791,14 +1795,7 @@ function send_test_email(string $to, ?string &$error = null): bool
         return true;
     } catch (Throwable $e) {
         error_log('MAIL ERROR: ' . $e->getMessage());
-        
-        $error =
-            'USER=' . $smtpUsername .
-            ' | PASS_LEN=' . strlen($smtpPassword) .
-            ' | HOST=' . $smtpHost .
-            ' | PORT=' . $config['smtp_port'] .
-            ' | ERROR=' . $e->getMessage();
-
+        $error = $e->getMessage();
         return false;
     }
 }
