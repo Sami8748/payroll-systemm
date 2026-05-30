@@ -1788,7 +1788,7 @@ function send_test_email(string $to, ?string &$error = null): bool
         $mail->Timeout = 30;
         $mail->SMTPKeepAlive = false;
 
-        $mail->SMTPDebug = 2;
+        $mail->SMTPDebug = 4;
         $mail->Debugoutput = 'error_log';
 
         $mail->CharSet = 'UTF-8';
