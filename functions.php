@@ -1765,7 +1765,12 @@ function send_test_email(string $to, ?string &$error = null): bool
         $smtpUsername = trim((string)$config['smtp_username']);
         $smtpPassword = trim((string)$config['smtp_password']);
 
-
+        throw new Exception(
+            'USER=' . $smtpUsername .
+            ' | PASS_LEN=' . strlen($smtpPassword) .
+            ' | HOST=' . $smtpHost .
+            ' | PORT=' . $config['smtp_port']
+        );
 
         $mail->isSMTP();
         $mail->Host = $smtpHost;
