@@ -1637,12 +1637,16 @@ function send_payslip_email(array $employee, array $payroll): bool
         set_last_delivery_error('');
         log_delivery('email', (string)$employee['name'], $to, true, 'PHPMailer sent with attachment');
         return true;
-    } catch (Throwable $e) {
+    }catch (Throwable $e) {
+        error_log('MAIL ERROR FULL: ' . $e->getMessage());
+
         $msg = $e->getMessage();
         set_last_delivery_error($msg);
         log_delivery('email', (string)$employee['name'], $to, false, $msg);
+
         return false;
-    }
+}
+
 }
 
 function send_payslip_line(array $employee, array $payroll): bool
