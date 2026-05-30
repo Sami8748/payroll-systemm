@@ -1791,7 +1791,14 @@ function send_test_email(string $to, ?string &$error = null): bool
         return true;
     } catch (Throwable $e) {
         error_log('MAIL ERROR: ' . $e->getMessage());
-        $error = $e->getMessage();
+        
+        $error =
+            'USER=' . $smtpUsername .
+            ' | PASS_LEN=' . strlen($smtpPassword) .
+            ' | HOST=' . $smtpHost .
+            ' | PORT=' . $config['smtp_port'] .
+            ' | ERROR=' . $e->getMessage();
+
         return false;
     }
 }
