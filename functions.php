@@ -1777,17 +1777,19 @@ function send_test_email(string $to, ?string &$error = null): bool
 
         $mail->isSMTP();
         $mail->Host = $smtpHost;
-        $mail->Port = (int)$config['smtp_port'];
-        $mail->SMTPAuth = $smtpUsername !== '';
-        if ($smtpUsername !== '') {
-            $mail->Username = $smtpUsername;
-            $mail->Password = $smtpPassword;
 
+        $mail->SMTPAuth = true;
+        $mail->Username = $smtpUsername;
+        $mail->Password = $smtpPassword;
 
-        }
-        if ((string)$config['smtp_secure'] !== '') {
-            $mail->SMTPSecure = (string)$config['smtp_secure'];
-        }
+        $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+
+        $mail->Timeout = 30;
+        $mail->SMTPKeepAlive = false;
+
+        $mail->SMTPDebug = 2;
+        $mail->Debugoutput = 'error_log';
 
         $mail->CharSet = 'UTF-8';
         $mail->setFrom((string)$config['mail_from'], (string)$config['mail_from_name']);
