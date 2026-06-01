@@ -1783,7 +1783,7 @@ function send_test_email(string $to, ?string &$error = null): bool
         $mail->Password = $smtpPassword;
 
         $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
+        $mail->Port = 2525;
 
         $mail->Timeout = 30;
         $mail->SMTPKeepAlive = false;
