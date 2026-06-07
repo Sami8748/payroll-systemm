@@ -1171,13 +1171,7 @@ function resolve_pdf_font_family_for_thai(): string
                 if ($boldItalicPath !== '' && is_file($boldItalicPath)) {
                     TCPDF_FONTS::addTTFfont($boldItalicPath, 'TrueTypeUnicode', 'BI', 96);
                 }
-            } catch (Throwable $e) {
-                $fontName = '';
-            }
-            if (is_string($fontName) && $fontName !== '') {
-                $resolved = $fontName;
-                return $resolved;
-            }
+            } 
         }
     }
 
@@ -1275,7 +1269,7 @@ function build_private_download_url(string $token): string
 
 function generate_encrypted_payslip_pdf(int $payrollId, int $generatedBy, ?string &$error = null): ?array
 {
-    ensure_composer_autoload();
+
 
     if (!class_exists('TCPDF')) {
         $error = t('payslip_library_missing');
@@ -1563,16 +1557,106 @@ function generate_encrypted_payslip_pdf(int $payrollId, int $generatedBy, ?strin
     return upsert_payslip_file($payrollId, $filePath, $fileName, $generatedBy);
 }
 
-function send_payslip_email(array $employee, array $payroll): bool
+function send_payslip_via_brevo(
+    string $to,
+    string $name,
+    string $subject,
+    string $message,
+    string $pdfPath
+): bool
 {
-    ensure_composer_autoload();
+    $config = app_config();
 
-    if (!class_exists('PHPMailer\\PHPMailer\\PHPMailer')) {
-        $msg = t('payslip_library_missing');
-        set_last_delivery_error($msg);
-        log_delivery('email', (string)$employee['name'], (string)$employee['email'], false, $msg);
+    $apiKey = trim((string)$config['brevo_api_key']);
+
+    if ($apiKey === '') {
+        error_log('BREVO API KEY NOT FOUND');
         return false;
     }
+
+    if (!is_file($pdfPath)) {
+        error_log('PDF FILE NOT FOUND: ' . $pdfPath);
+        return false;
+    }
+
+    $pdfContent = file_get_contents($pdfPath);
+
+    if ($pdfContent === false) {
+        error_log('READ PDF FAILED');
+        return false;
+    }
+
+    $payload = [
+        'sender' => [
+            'name'  => (string)$config['mail_from_name'],
+            'email' => (string)$config['mail_from'],
+        ],
+
+        'to' => [
+            [
+                'email' => $to,
+                'name'  => $name,
+            ]
+        ],
+
+        'subject' => $subject,
+
+        'htmlContent' => nl2br($message),
+
+        'attachment' => [
+            [
+                'name'    => basename($pdfPath),
+                'content' => base64_encode($pdfContent),
+            ]
+        ]
+    ];
+
+    $ch = curl_init();
+
+    curl_setopt_array($ch, [
+        CURLOPT_URL => 'https://api.brevo.com/v3/smtp/email',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_HTTPHEADER => [
+            'accept: application/json',
+            'api-key: ' . $apiKey,
+            'content-type: application/json'
+        ],
+        CURLOPT_POSTFIELDS => json_encode($payload),
+        CURLOPT_TIMEOUT => 30,
+    ]);
+
+    $response = curl_exec($ch);
+
+    $httpCode = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+    $curlError = curl_error($ch);
+
+    curl_close($ch);
+
+    if ($curlError !== '') {
+        error_log('BREVO CURL ERROR: ' . $curlError);
+        return false;
+    }
+
+    if ($httpCode < 200 || $httpCode >= 300) {
+        error_log(
+            'BREVO ERROR HTTP=' .
+            $httpCode .
+            ' RESPONSE=' .
+            $response
+        );
+
+        return false;
+    }
+
+    return true;
+}
+
+
+function send_payslip_email(array $employee, array $payroll): bool
+{
+    
 
     $to = trim((string)$employee['email']);
     if ($to === '') {
@@ -1594,62 +1678,54 @@ function send_payslip_email(array $employee, array $payroll): bool
         }
     }
 
-    $config = app_config();
-    $smtpHost = trim((string)$config['smtp_host']);
-    if ($smtpHost === '') {
-        $msg = 'SMTP is not configured. Please set smtp_host, smtp_port, smtp_secure, smtp_username, smtp_password in config.php';
-        set_last_delivery_error($msg);
-        log_delivery('email', (string)$employee['name'], $to, false, $msg);
-        return false;
-    }
+    
 
-    $mail = new PHPMailer\PHPMailer\PHPMailer(true);
-    try {
-        $smtpUsername = trim((string)$config['smtp_username']);
-        $smtpPassword = trim((string)$config['smtp_password']);
-
-
-        
-
-        $mail->isSMTP();
-        $mail->Host = $smtpHost;
-        $mail->SMTPAuth = true;
-        $mail->Username = $smtpUsername;
-        $mail->Password = $smtpPassword;
-
-        $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
-
-        $mail->Timeout = 30;
-        $mail->SMTPKeepAlive = false;
-        
-        $mail->SMTPDebug = 2;
-        $mail->Debugoutput = 'error_log';
-
-        $mail->CharSet = 'UTF-8';
-        $mail->setFrom((string)$config['mail_from'], (string)$config['mail_from_name']);
-        $mail->addAddress($to, (string)$employee['name']);
-        $mail->Subject = sprintf('Payslip %s/%s - %s', $payroll['month'], $payroll['year'], $employee['name']);
-        $mail->Body = "Attached is your payslip PDF.\nPassword: Employee National ID";
-        $mail->addAttachment((string)$file['file_path'], (string)$file['file_name']);
-        $mail->send();
+    $result = send_payslip_via_brevo(
+        $to,
+        (string)$employee['name'],
+        sprintf(
+            'Payslip %s/%s - %s',
+            $payroll['month'],
+            $payroll['year'],
+            $employee['name']
+        ),
+        "Attached is your payslip PDF.\nPassword: Employee National ID",
+        (string)$file['file_path']
+    );
+    if ($result) {
 
         set_last_delivery_error('');
-        log_delivery('email', (string)$employee['name'], $to, true, 'PHPMailer sent with attachment');
+
+        log_delivery(
+            'email',
+            (string)$employee['name'],
+            $to,
+            true,
+            'Brevo API sent with attachment'
+        );
+
         return true;
-    }catch (Throwable $e) {
-        error_log('MAIL ERROR FULL: ' . $e->getMessage());
+    }
 
-        $msg = $e->getMessage();
-        set_last_delivery_error($msg);
-        log_delivery('email', (string)$employee['name'], $to, false, $msg);
+    $msg = 'Brevo API failed';
 
-        return false;
+    set_last_delivery_error($msg);
+
+    log_delivery(
+        'email',
+        (string)$employee['name'],
+        $to,
+        false,
+        $msg
+    );
+
+    return false;
+
+
+
 }
 
-}
-
-function send_payslip_line(array $employee, array $payroll): bool
+/*function send_payslip_line(array $employee, array $payroll): bool
 {
     if (!is_line_delivery_enabled()) {
         $msg = 'LINE delivery is disabled in config.php (line_enabled=false).';
@@ -1744,69 +1820,34 @@ function send_payslip_line(array $employee, array $payroll): bool
     log_delivery('line', (string)$employee['name'], $lineUserId, false, $details);
 
     return false;
-}
+}*/
 
 function send_test_email(string $to, ?string &$error = null): bool
 {
-    ensure_composer_autoload();
-
-    if (!class_exists('PHPMailer\\PHPMailer\\PHPMailer')) {
-        $error = t('payslip_library_missing');
-        return false;
-    }
-
     $to = trim($to);
+
     if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
         $error = 'Invalid email format.';
         return false;
     }
 
-    $config = app_config();
-    $smtpHost = trim((string)$config['smtp_host']);
-    if ($smtpHost === '') {
-        $error = 'SMTP is not configured. Please set smtp_host, smtp_port, smtp_secure, smtp_username, smtp_password in config.php';
+    $result = send_payslip_via_brevo(
+        $to,
+        'Test User',
+        'Payroll Test Email',
+        'This is a test email from Payroll System.',
+        __DIR__ . '/test.pdf'
+    );
+
+    if (!$result) {
+        $error = 'Brevo API failed';
         return false;
     }
 
-    $mail = new PHPMailer\PHPMailer\PHPMailer(true);
-
-    try {
-        $smtpUsername = trim((string)$config['smtp_username']);
-        $smtpPassword = trim((string)$config['smtp_password']);
-
-
-        $mail->isSMTP();
-        $mail->Host = $smtpHost;
-
-        $mail->SMTPAuth = true;
-        $mail->Username = $smtpUsername;
-        $mail->Password = $smtpPassword;
-
-        $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 2525;
-
-        $mail->Timeout = 30;
-        $mail->SMTPKeepAlive = false;
-
-        $mail->SMTPDebug = 4;
-        $mail->Debugoutput = 'error_log';
-
-        $mail->CharSet = 'UTF-8';
-        $mail->setFrom((string)$config['mail_from'], (string)$config['mail_from_name']);
-        $mail->addAddress($to);
-        $mail->Subject = 'Payroll Test Email';
-        $mail->Body = 'This is a test email from Payroll Config Check at ' . date('Y-m-d H:i:s');
-        $mail->send();
-
-        return true;
-    } catch (Throwable $e) {
-        error_log('MAIL ERROR: ' . $e->getMessage());
-        $error = $e->getMessage();
-        return false;
-    }
+    return true;
 }
 
-function send_test_line(string $lineUserId, ?string &$error = null): bool
+/*function send_test_line(string $lineUserId, ?string &$error = null): bool
 {
     if (!is_line_delivery_enabled()) {
         $error = 'LINE delivery is disabled in config.php (line_enabled=false).';
@@ -1872,7 +1913,7 @@ function send_test_line(string $lineUserId, ?string &$error = null): bool
     }
 
     return false;
-}
+}*/
 
 function log_delivery(string $channel, string $employeeName, string $destination, bool $success, string $details): void
 {
@@ -2281,24 +2322,32 @@ function send_email_brevo(
     string $subject,
     string $body
 ): bool {
-
-    $config = app_config();
+    $base64Pdf = base64_encode($pdfContent);
 
     $payload = [
         'sender' => [
-            'name' => 'Payroll System',
-            'email' => 'samitanunkongrod@gmail.com'
+            'email' => 'samitanunkongrod@gmail.com',
+            'name' => 'Payroll System'
         ],
+
         'to' => [
             [
                 'email' => $to,
                 'name' => $name
             ]
         ],
-        'subject' => $subject,
-        'htmlContent' => nl2br($body)
-    ];
 
+        'subject' => $subject,
+
+        'htmlContent' => nl2br($message),
+
+        'attachment' => [
+            [
+                'content' => $base64Pdf,
+                'name' => basename($pdfPath)
+            ]
+        ]
+    ];
     $ch = curl_init();
 
     curl_setopt_array($ch, [
@@ -2307,16 +2356,14 @@ function send_email_brevo(
         CURLOPT_POST => true,
         CURLOPT_HTTPHEADER => [
             'accept: application/json',
-            'api-key: ' . $config['brevo_api_key'],
+            'api-key: ' . app_config()['brevo_api_key'],
             'content-type: application/json'
         ],
         CURLOPT_POSTFIELDS => json_encode($payload)
     ]);
-
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
     curl_close($ch);
 
-    return $httpCode >= 200 && $httpCode < 300;
+return $httpCode >= 200 && $httpCode < 300;
 }
