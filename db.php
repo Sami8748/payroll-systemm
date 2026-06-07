@@ -38,7 +38,7 @@ function db(): PDO
         $pdo->exec("SET SESSION sql_require_primary_key=0");
     }
 
-    run_migrations($pdo);
+    //run_migrations($pdo);
 
     return $pdo;
 }
