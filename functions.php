@@ -1577,16 +1577,20 @@ function send_payslip_via_brevo(
         return false;
     }
 
-    if (!is_file($pdfPath)) {
-        error_log('PDF FILE NOT FOUND: ' . $pdfPath);
-        return false;
-    }
 
-    $pdfContent = file_get_contents($pdfPath);
 
-    if ($pdfContent === false) {
-        error_log('READ PDF FAILED');
-        return false;
+    $attachments = [];
+
+    if ($pdfPath !== '' && is_file($pdfPath)) {
+
+        $pdfContent = file_get_contents($pdfPath);
+
+        if ($pdfContent !== false) {
+            $attachments[] = [
+                'name' => basename($pdfPath),
+                'content' => base64_encode($pdfContent),
+            ];
+        }
     }
 
     $payload = [
@@ -1606,12 +1610,7 @@ function send_payslip_via_brevo(
 
         'htmlContent' => nl2br($message),
 
-        'attachment' => [
-            [
-                'name'    => basename($pdfPath),
-                'content' => base64_encode($pdfContent),
-            ]
-        ]
+       'attachment' => $attachments
     ];
 
     $ch = curl_init();
@@ -1830,22 +1829,13 @@ function send_payslip_email(array $employee, array $payroll): bool
     return false;
 }*/
 
+
 function send_test_email(string $to, ?string &$error = null): bool
 {
     $to = trim($to);
 
-    /*if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
+    if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
         $error = 'Invalid email format.';
-        return false;
-    }*/
-    if (!$result) {
-
-    $config = app_config();
-
-        $error =
-            'API=' .
-            substr((string)$config['brevo_api_key'], 0, 15);
-
         return false;
     }
 
@@ -1854,11 +1844,17 @@ function send_test_email(string $to, ?string &$error = null): bool
         'Test User',
         'Payroll Test Email',
         'This is a test email from Payroll System.',
-        __DIR__ . '/test.pdf'
+        ''
     );
 
     if (!$result) {
-        $error = 'Brevo API failed';
+
+        $config = app_config();
+
+        $error =
+            'API=' .
+            substr((string)$config['brevo_api_key'], 0, 15);
+
         return false;
     }
 
