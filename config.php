@@ -36,5 +36,6 @@ return [
     'smtp_secure' => getenv('SMTP_SECURE'),
     'smtp_username' => getenv('SMTP_USER'),
     'smtp_password' => getenv('SMTP_PASS'),
+    'brevo_api_key' => getenv('BREVO_API_KEY'),
     'db_ssl'  => true,
 ];

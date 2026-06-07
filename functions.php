@@ -2275,3 +2275,48 @@ function generate_sso_6_09_csv(int $month, int $year): string
 
     return $fileName;
 }
+function send_email_brevo(
+    string $to,
+    string $name,
+    string $subject,
+    string $body
+): bool {
+
+    $config = app_config();
+
+    $payload = [
+        'sender' => [
+            'name' => 'Payroll System',
+            'email' => 'samitanunkongrod@gmail.com'
+        ],
+        'to' => [
+            [
+                'email' => $to,
+                'name' => $name
+            ]
+        ],
+        'subject' => $subject,
+        'htmlContent' => nl2br($body)
+    ];
+
+    $ch = curl_init();
+
+    curl_setopt_array($ch, [
+        CURLOPT_URL => 'https://api.brevo.com/v3/smtp/email',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_HTTPHEADER => [
+            'accept: application/json',
+            'api-key: ' . $config['brevo_api_key'],
+            'content-type: application/json'
+        ],
+        CURLOPT_POSTFIELDS => json_encode($payload)
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+    curl_close($ch);
+
+    return $httpCode >= 200 && $httpCode < 300;
+}
