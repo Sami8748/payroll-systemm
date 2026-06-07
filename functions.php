@@ -1593,6 +1593,7 @@ function send_payslip_via_brevo(
         }
     }
 
+
     $payload = [
         'sender' => [
             'name'  => (string)$config['mail_from_name'],
@@ -1608,11 +1609,13 @@ function send_payslip_via_brevo(
 
         'subject' => $subject,
 
-        'htmlContent' => nl2br($message),
-
-       'attachment' => $attachments
+        'htmlContent' => nl2br($message)
     ];
 
+    if (!empty($attachments)) {
+        $payload['attachment'] = $attachments;
+    }
+    
     $ch = curl_init();
 
     curl_setopt_array($ch, [
