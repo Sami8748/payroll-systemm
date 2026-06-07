@@ -1834,8 +1834,18 @@ function send_test_email(string $to, ?string &$error = null): bool
 {
     $to = trim($to);
 
-    if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
+    /*if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
         $error = 'Invalid email format.';
+        return false;
+    }*/
+    if (!$result) {
+
+    $config = app_config();
+
+        $error =
+            'API=' .
+            substr((string)$config['brevo_api_key'], 0, 15);
+
         return false;
     }
 
