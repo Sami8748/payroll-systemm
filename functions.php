@@ -1649,6 +1649,11 @@ function send_payslip_via_brevo(
             ' RESPONSE=' .
             $response
         );
+        set_last_delivery_error(
+        'HTTP=' . $httpCode .
+        ' RESPONSE=' . $response
+        );
+
 
         return false;
     }
