@@ -1849,11 +1849,8 @@ function send_test_email(string $to, ?string &$error = null): bool
 
     if (!$result) {
 
-        $config = app_config();
+        $error = get_last_delivery_error();
 
-        $error =
-            'API=' .
-            substr((string)$config['brevo_api_key'], 0, 15);
 
         return false;
     }
