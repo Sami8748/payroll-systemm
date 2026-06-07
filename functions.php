@@ -1154,6 +1154,7 @@ function resolve_pdf_font_family_for_thai(): string
                 continue;
             }
 
+
             try {
                 $fontName = TCPDF_FONTS::addTTFfont($regularPath, 'TrueTypeUnicode', '', 96);
 
@@ -1171,7 +1172,9 @@ function resolve_pdf_font_family_for_thai(): string
                 if ($boldItalicPath !== '' && is_file($boldItalicPath)) {
                     TCPDF_FONTS::addTTFfont($boldItalicPath, 'TrueTypeUnicode', 'BI', 96);
                 }
-            } 
+            } catch (Throwable $e) {
+                // ignore font registration errors
+            }
         }
     }
 
