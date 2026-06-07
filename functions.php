@@ -1273,7 +1273,7 @@ function build_private_download_url(string $token): string
 function generate_encrypted_payslip_pdf(int $payrollId, int $generatedBy, ?string &$error = null): ?array
 {
 
-
+    ensure_composer_autoload();
     if (!class_exists('TCPDF')) {
         $error = t('payslip_library_missing');
         return null;
@@ -1615,7 +1615,7 @@ function send_payslip_via_brevo(
     if (!empty($attachments)) {
         $payload['attachment'] = $attachments;
     }
-    
+
     $ch = curl_init();
 
     curl_setopt_array($ch, [
